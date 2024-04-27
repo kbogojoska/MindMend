@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .clock {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sleeping-time,
+        .bed-time,
+        .suggested-time {
+            margin-bottom: 10px;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+        input[type="time"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Sleep Tracker</h1>
+    <div class="clock">8:00 PM</div>
+    <div class="sleeping-time">
+        <label for="sleeping-time">Sleeping Time:</label>
+        <input type="time" id="sleeping-time">
+    </div>
+    <div class="bed-time">
+        <label for="bed-time">Bed Time:</label>
+        <input type="time" id="bed-time">
+    </div>
+    <div class="suggested-time">
+        <label for="suggested-time">Suggested Sleeping Time:</label>
+        <input type="time" id="suggested-time" disabled>
+    </div>
+    <button onclick="calculateSuggestedTime()">Calculate</button>
+</div>
+</body>
+</html>
