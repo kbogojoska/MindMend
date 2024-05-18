@@ -4,6 +4,7 @@ import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.SleepTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.SleepTrackerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.SleepTrackerRepository;
+import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
 import mk.ukim.finki.wp.mindmend.service.SleepTrackerService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class SleepTrackerImpl implements SleepTrackerService {
 
     private final SleepTrackerRepository sleepTrackerRepository;
+    private final ApplicationUserService applicationUserService;
 
-    public SleepTrackerImpl(SleepTrackerRepository sleepTrackerRepository) {
+    public SleepTrackerImpl(SleepTrackerRepository sleepTrackerRepository, ApplicationUserService applicationUserService) {
         this.sleepTrackerRepository = sleepTrackerRepository;
+        this.applicationUserService = applicationUserService;
     }
 
     @Override
@@ -32,7 +35,9 @@ public class SleepTrackerImpl implements SleepTrackerService {
     @Override
     public SleepTracker create(Integer recommendedSleepTime, LocalTime wakeUpTime, LocalTime bedTime) {
         SleepTracker sleepTracker;
-        ApplicationUser user = new ApplicationUser();
+        // for testing method can run only once because of the one to one relation
+        ApplicationUser user = applicationUserService.create("pip", "pip.m.com", "123");
+        //
         if (recommendedSleepTime != null) {
             sleepTracker = new SleepTracker(user, recommendedSleepTime, wakeUpTime, bedTime);
         } else {

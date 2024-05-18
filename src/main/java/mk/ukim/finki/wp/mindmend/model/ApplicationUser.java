@@ -18,6 +18,10 @@ public class ApplicationUser {
     private String username;
     private String password;
     private String email;
-    @OneToMany
-    private List<Habit> habits;
+
+    public ApplicationUser(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 }
