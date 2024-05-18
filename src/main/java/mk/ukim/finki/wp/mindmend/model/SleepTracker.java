@@ -1,18 +1,22 @@
 package mk.ukim.finki.wp.mindmend.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class SleepTracker extends Habit {
+@AllArgsConstructor
+public class SleepTracker {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private Integer recommendedSleepTime;
     private LocalTime wakeUpTime;
     private LocalTime bedTime;
