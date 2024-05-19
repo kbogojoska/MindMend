@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.SleepTracker;
+import mk.ukim.finki.wp.mindmend.model.habits.SleepTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.SleepTrackerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.SleepTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
@@ -17,7 +17,8 @@ public class SleepTrackerImpl implements SleepTrackerService {
     private final SleepTrackerRepository sleepTrackerRepository;
     private final ApplicationUserService applicationUserService;
 
-    public SleepTrackerImpl(SleepTrackerRepository sleepTrackerRepository, ApplicationUserService applicationUserService) {
+    public SleepTrackerImpl(SleepTrackerRepository sleepTrackerRepository,
+                            ApplicationUserService applicationUserService) {
         this.sleepTrackerRepository = sleepTrackerRepository;
         this.applicationUserService = applicationUserService;
     }
@@ -34,16 +35,20 @@ public class SleepTrackerImpl implements SleepTrackerService {
 
     @Override
     public SleepTracker create(Integer recommendedSleepTime, LocalTime wakeUpTime, LocalTime bedTime) {
-        SleepTracker sleepTracker;
         // for testing method can run only once because of the one to one relation
+        // will be logged user later
         ApplicationUser user = applicationUserService.create("pip", "pip.m.com", "123");
         //
-        if (recommendedSleepTime != null) {
-            sleepTracker = new SleepTracker(user, recommendedSleepTime, wakeUpTime, bedTime);
-        } else {
-            sleepTracker = new SleepTracker(user, wakeUpTime, bedTime);
-        }
-        return sleepTrackerRepository.save(sleepTracker);
+        return recommendedSleepTime != null ?
+                sleepTrackerRepository.save(new SleepTracker(user, recommendedSleepTime, wakeUpTime, bedTime)) :
+                sleepTrackerRepository.save(new SleepTracker(user, wakeUpTime, bedTime));
+
+//        if (recommendedSleepTime != null) {
+//            sleepTracker = new SleepTracker(user, recommendedSleepTime, wakeUpTime, bedTime);
+//        } else {
+//            sleepTracker = new SleepTracker(user, wakeUpTime, bedTime);
+//        }
+//        return sleepTrackerRepository.save(sleepTracker);
     }
 
     @Override

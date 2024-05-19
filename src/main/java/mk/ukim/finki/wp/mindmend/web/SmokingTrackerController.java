@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.web;
 
-import mk.ukim.finki.wp.mindmend.dto.SmokingTrackerDTO;
-import mk.ukim.finki.wp.mindmend.model.SmokingTracker;
+import mk.ukim.finki.wp.mindmend.model.DTO.SmokingTrackerDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.SmokingTracker;
 import mk.ukim.finki.wp.mindmend.service.SmokingTrackerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,12 @@ public class SmokingTrackerController {
     }
 
     @GetMapping(value = {"", "/"})
-    public List<SmokingTrackerDTO> getAllSmokeTracker() {
+    public List<SmokingTracker> getAllSmokeTracker() {
         return this.smokingTrackerService.findAllSmokingTrackers();
     }
 
     @GetMapping("/{id}")
-    public SmokingTrackerDTO getSmokeTrackerById(@PathVariable Long id) {
+    public SmokingTracker getSmokeTrackerById(@PathVariable Long id) {
         return this.smokingTrackerService.findById(id);
     }
 

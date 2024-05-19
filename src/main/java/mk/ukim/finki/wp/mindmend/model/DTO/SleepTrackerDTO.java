@@ -1,11 +1,10 @@
 package mk.ukim.finki.wp.mindmend.model.DTO;
 
 import lombok.Data;
-import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 
 import java.time.LocalTime;
 @Data
-public class SleepTrackerDto {
+public class SleepTrackerDTO {
 //    private Long userId;
     private Integer recommendedSleepTime;
     private LocalTime wakeUpTime;

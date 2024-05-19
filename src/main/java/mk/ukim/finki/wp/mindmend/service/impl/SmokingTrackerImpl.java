@@ -1,12 +1,11 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.wp.mindmend.dto.SmokingTrackerDTO;
+import mk.ukim.finki.wp.mindmend.model.DTO.SmokingTrackerDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.SmokingMapper;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.SmokingTracker;
+import mk.ukim.finki.wp.mindmend.model.habits.SmokingTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.SmokingTrackerNotFoundException;
-import mk.ukim.finki.wp.mindmend.repository.ApplicationUserRepository;
 import mk.ukim.finki.wp.mindmend.repository.SmokingTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
 import mk.ukim.finki.wp.mindmend.service.SmokingTrackerService;
@@ -21,13 +20,15 @@ public class SmokingTrackerImpl implements SmokingTrackerService {
     private final ApplicationUserService userService;
 
     @Override
-    public List<SmokingTrackerDTO> findAllSmokingTrackers() {
-        return SmokingMapper.MapToListViewModel(smokingRepository.findAll());
+    public List<SmokingTracker> findAllSmokingTrackers() {
+//        return SmokingMapper.MapToListViewModel(smokingRepository.findAll());
+        return smokingRepository.findAll();
     }
 
     @Override
-    public SmokingTrackerDTO findById(Long id) {
-        return SmokingMapper.MapToViewModel(smokingRepository.findById(id).orElseThrow(SmokingTrackerNotFoundException::new));
+    public SmokingTracker findById(Long id) {
+//        return SmokingMapper.MapToViewModel(smokingRepository.findById(id).orElseThrow(SmokingTrackerNotFoundException::new));
+        return smokingRepository.findById(id).orElseThrow(SmokingTrackerNotFoundException::new);
     }
 
     @Override

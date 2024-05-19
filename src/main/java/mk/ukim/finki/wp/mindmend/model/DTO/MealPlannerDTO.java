@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.mindmend.dto;
+package mk.ukim.finki.wp.mindmend.model.DTO;
 
 import lombok.Getter;
 import mk.ukim.finki.wp.mindmend.model.Recipe;

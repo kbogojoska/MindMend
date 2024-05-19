@@ -1,7 +1,8 @@
-package mk.ukim.finki.wp.mindmend.model;
+package mk.ukim.finki.wp.mindmend.model.habits;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 
 @Entity
 @Data
@@ -23,7 +24,6 @@ public class SmokingTracker {
     }
 
     public SmokingTracker(ApplicationUser applicationUser) {
-        super();
         this.applicationUser = applicationUser;
         this.cigarettesPerDay=0;
     }

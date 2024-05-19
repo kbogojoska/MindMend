@@ -1,10 +1,10 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.wp.mindmend.dto.MealPlannerDTO;
+import mk.ukim.finki.wp.mindmend.model.DTO.MealPlannerDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.MealPlannerMapper;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.MealPlanner;
+import mk.ukim.finki.wp.mindmend.model.habits.MealPlanner;
 import mk.ukim.finki.wp.mindmend.model.Recipe;
 import mk.ukim.finki.wp.mindmend.model.exceptions.MealPlannerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.MealPlannerRepository;
@@ -25,13 +25,15 @@ public class MealPlannerServiceImpl implements MealPlannerService {
 
 
     @Override
-    public List<MealPlannerDTO> findAllMealPlanners() {
-        return MealPlannerMapper.MapToListViewModel(this.mealPlannerRepository.findAll());
+    public List<MealPlanner> findAllMealPlanners() {
+//        return MealPlannerMapper.MapToListViewModel(this.mealPlannerRepository.findAll());
+        return this.mealPlannerRepository.findAll();
     }
 
     @Override
-    public MealPlannerDTO findById(Long id) {
-        return MealPlannerMapper.MapToViewModel(mealPlannerRepository.findById(id).orElseThrow(MealPlannerNotFoundException::new));
+    public MealPlanner findById(Long id) {
+//        return MealPlannerMapper.MapToViewModel(mealPlannerRepository.findById(id).orElseThrow(MealPlannerNotFoundException::new));
+        return this.mealPlannerRepository.findById(id).orElseThrow(MealPlannerNotFoundException::new);
     }
 
     @Override

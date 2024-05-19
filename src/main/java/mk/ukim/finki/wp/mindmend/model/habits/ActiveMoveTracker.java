@@ -1,7 +1,8 @@
-package mk.ukim.finki.wp.mindmend.model;
+package mk.ukim.finki.wp.mindmend.model.habits;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 
 @Entity
 @Data
@@ -17,12 +18,12 @@ public class ActiveMoveTracker {
 
     public ActiveMoveTracker(ApplicationUser user)
     {
-        super();
+        this.user = user;
         dailyStepsGoal = 10000;
     }
 
-    public ActiveMoveTracker(ApplicationUser user,Integer dailyStepsGoal) {
-        super();
+    public ActiveMoveTracker(ApplicationUser user, Integer dailyStepsGoal) {
+        this.user = user;
         this.dailyStepsGoal = dailyStepsGoal;
     }
 

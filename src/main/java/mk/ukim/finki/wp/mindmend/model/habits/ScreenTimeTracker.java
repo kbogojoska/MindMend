@@ -1,7 +1,8 @@
-package mk.ukim.finki.wp.mindmend.model;
+package mk.ukim.finki.wp.mindmend.model.habits;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 
 import java.time.LocalTime;
 
@@ -19,8 +20,7 @@ public class ScreenTimeTracker {
     @OneToOne
     private ApplicationUser applicationUser;
 
-        public void calculateBreakTime()
-    {
+    public void calculateBreakTime() {
         this.nextBreakTime = LocalTime.now().plusMinutes(20);
         this.endOfBreakTime = nextBreakTime.plusSeconds(20);
     }
@@ -30,17 +30,15 @@ public class ScreenTimeTracker {
     }
 
     public ScreenTimeTracker(ApplicationUser user) {
-        super();
-        this.applicationUser=applicationUser;
+        this.applicationUser = user;
         calculateBreakTime();
     }
 
     public ScreenTimeTracker(ApplicationUser applicationUser, LocalTime workTimeStart, LocalTime workTimeEnd) {
-        super();
-        this.applicationUser=applicationUser;
+        this.applicationUser = applicationUser;
         this.workTimeStart = workTimeStart;
         this.workTimeEnd = workTimeEnd;
-        this.nextBreakTime=workTimeStart.plusMinutes(20);
-        this.nextBreakTime=nextBreakTime.plusSeconds(20);
+        this.nextBreakTime = workTimeStart.plusMinutes(20);
+        this.nextBreakTime = nextBreakTime.plusSeconds(20);
     }
 }
