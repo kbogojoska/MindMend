@@ -1,8 +1,7 @@
 package mk.ukim.finki.wp.mindmend.web;
 
-import jakarta.persistence.GeneratedValue;
-import mk.ukim.finki.wp.mindmend.dto.DrinkingTrackerDTO;
-import mk.ukim.finki.wp.mindmend.model.DrinkingTracker;
+import mk.ukim.finki.wp.mindmend.model.DTO.DrinkingTrackerDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.DrinkingTracker;
 import mk.ukim.finki.wp.mindmend.service.DrinkingTrackerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +17,13 @@ public class DrinkingTrackerController {
     }
 
     @GetMapping(value = {"","/"})
-    public List<DrinkingTrackerDTO> getDrinkTrackers()
+    public List<DrinkingTracker> getDrinkTrackers()
     {
         return drinkingTrackerService.findAllDrinkingTrackers();
     }
 
     @GetMapping("/{id}")
-    public DrinkingTrackerDTO getDrinkTrackerById(@PathVariable Long id)
+    public DrinkingTracker getDrinkTrackerById(@PathVariable Long id)
     {
         return drinkingTrackerService.findById(id);
     }

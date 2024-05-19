@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.mindmend.dto;
+package mk.ukim.finki.wp.mindmend.model.DTO;
 
 import lombok.Getter;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
@@ -18,10 +18,14 @@ public class ScreenTimeDTO {
 
         if (workTimeStart != null) {
             this.nextBreakTime = workTimeStart.plusMinutes(20);
-            this.endOfBreakTime = this.nextBreakTime.plusSeconds(20);
+            this.endOfBreakTime = nextBreakTime.plusSeconds(20);
         } else {
             this.nextBreakTime = LocalTime.now().plusMinutes(20);
             this.endOfBreakTime = this.nextBreakTime.plusSeconds(20);
+        }
+
+        if (this.endOfBreakTime.getSecond() == 0) {
+            this.endOfBreakTime = this.endOfBreakTime.minusSeconds(1);
         }
     }
 

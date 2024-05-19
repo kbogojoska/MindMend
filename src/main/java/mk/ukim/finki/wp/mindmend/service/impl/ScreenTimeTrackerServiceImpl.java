@@ -1,10 +1,10 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.wp.mindmend.dto.ScreenTimeDTO;
+import mk.ukim.finki.wp.mindmend.model.DTO.ScreenTimeDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.ScreenTimeMapper;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.ScreenTimeTracker;
+import mk.ukim.finki.wp.mindmend.model.habits.ScreenTimeTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.ScreenTimeTrackerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.ScreenTimeTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
@@ -21,13 +21,15 @@ public class ScreenTimeTrackerServiceImpl implements ScreenTimeTrackerService {
     private final ApplicationUserService applicationUserService;
 
     @Override
-    public List<ScreenTimeDTO> findAllScreenTimeTrackers() {
-        return ScreenTimeMapper.MapToListViewModel(screenRepository.findAll());
+    public List<ScreenTimeTracker> findAllScreenTimeTrackers() {
+//        return ScreenTimeMapper.MapToListViewModel(screenRepository.findAll());
+        return screenRepository.findAll();
     }
 
     @Override
-    public ScreenTimeDTO findById(Long id) {
-        return ScreenTimeMapper.MapToViewModel(screenRepository.findById(id).orElseThrow(ScreenTimeTrackerNotFoundException::new));
+    public ScreenTimeTracker findById(Long id) {
+//        return ScreenTimeMapper.MapToViewModel(screenRepository.findById(id).orElseThrow(ScreenTimeTrackerNotFoundException::new));
+        return screenRepository.findById(id).orElseThrow(ScreenTimeTrackerNotFoundException::new);
     }
 
     @Override

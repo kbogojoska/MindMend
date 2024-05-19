@@ -17,7 +17,7 @@ public class SocialActivityController {
         this.socialActivityService = socialActivityService;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = {"/",""})
     public List<SocialActivity> findAllSocialActivities() {
         return socialActivityService.findAllSocialActivities();
     }

@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.mapppers;
 
-import mk.ukim.finki.wp.mindmend.dto.MealPlannerDTO;
-import mk.ukim.finki.wp.mindmend.model.MealPlanner;
+import mk.ukim.finki.wp.mindmend.model.DTO.MealPlannerDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.MealPlanner;
 
 import java.util.ArrayList;
 import java.util.List;

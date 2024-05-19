@@ -1,10 +1,10 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.wp.mindmend.dto.DrinkingTrackerDTO;
+import mk.ukim.finki.wp.mindmend.model.DTO.DrinkingTrackerDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.DrinkingMapper;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.DrinkingTracker;
+import mk.ukim.finki.wp.mindmend.model.habits.DrinkingTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.DrinkingTrackerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.DrinkingTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
@@ -20,13 +20,15 @@ public class DrinkingTrackerImpl implements DrinkingTrackerService {
     private final ApplicationUserService userService;
 
     @Override
-    public List<DrinkingTrackerDTO> findAllDrinkingTrackers() {
-        return DrinkingMapper.MapToListViewModel(drinkingRepository.findAll());
+    public List<DrinkingTracker> findAllDrinkingTrackers() {
+//        return DrinkingMapper.MapToListViewModel(drinkingRepository.findAll());
+        return drinkingRepository.findAll();
     }
 
     @Override
-    public DrinkingTrackerDTO findById(Long id) {
-        return DrinkingMapper.MapToViewModel(drinkingRepository.findById(id).orElseThrow(DrinkingTrackerNotFoundException::new));
+    public DrinkingTracker findById(Long id) {
+//        return DrinkingMapper.MapToViewModel(drinkingRepository.findById(id).orElseThrow(DrinkingTrackerNotFoundException::new));
+        return drinkingRepository.findById(id).orElseThrow(DrinkingTrackerNotFoundException::new);
     }
 
     @Override

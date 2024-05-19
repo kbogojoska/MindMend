@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.web;
 
 import mk.ukim.finki.wp.mindmend.model.DTO.SocialSphereDTO;
-import mk.ukim.finki.wp.mindmend.model.SocialSphere;
+import mk.ukim.finki.wp.mindmend.model.habits.SocialSphere;
 import mk.ukim.finki.wp.mindmend.service.SocialSphereService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class SocialSphereController {
         this.socialSphereService = socialSphereService;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = {"/",""})
     public List<SocialSphere> findAllSocialSpheres() {
         return socialSphereService.findAllSocialSpheres();
     }

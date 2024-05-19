@@ -1,8 +1,7 @@
 package mk.ukim.finki.wp.mindmend.service;
 
-import mk.ukim.finki.wp.mindmend.model.HydroTrack;
+import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public interface HydroTrackService {

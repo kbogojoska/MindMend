@@ -1,9 +1,11 @@
-package mk.ukim.finki.wp.mindmend.model;
+package mk.ukim.finki.wp.mindmend.model.habits;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import mk.ukim.finki.wp.mindmend.model.Recipe;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class MealPlanner{
     private ApplicationUser user;
 
     public MealPlanner(ApplicationUser user,List<Recipe> recipes) {
-        super();
+        this.user = user;
         this.recipes = recipes;
     }
 

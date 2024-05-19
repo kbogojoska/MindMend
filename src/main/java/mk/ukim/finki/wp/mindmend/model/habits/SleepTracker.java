@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.mindmend.model;
+package mk.ukim.finki.wp.mindmend.model.habits;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 
 import java.time.LocalTime;
 
@@ -28,7 +29,6 @@ public class SleepTracker {
     }
 
     public SleepTracker(ApplicationUser applicationUser, LocalTime wakeUpTime, LocalTime bedTime) {
-        super();
         this.recommendedSleepTime = 8;
         this.wakeUpTime = wakeUpTime;
         this.bedTime = bedTime;
@@ -36,7 +36,6 @@ public class SleepTracker {
     }
 
     public SleepTracker(ApplicationUser applicationUser, Integer recommendedSleepTime, LocalTime wakeUpTime, LocalTime bedTime) {
-        super();
         this.recommendedSleepTime = recommendedSleepTime;
         this.wakeUpTime = wakeUpTime;
         this.bedTime = bedTime;

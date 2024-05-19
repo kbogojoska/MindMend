@@ -1,9 +1,8 @@
 package mk.ukim.finki.wp.mindmend.service;
 
 import mk.ukim.finki.wp.mindmend.model.SocialActivity;
-import mk.ukim.finki.wp.mindmend.model.SocialSphere;
+import mk.ukim.finki.wp.mindmend.model.habits.SocialSphere;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public interface SocialSphereService {

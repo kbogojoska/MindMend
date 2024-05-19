@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.web;
 
 import mk.ukim.finki.wp.mindmend.model.DTO.HydroTrackDTO;
-import mk.ukim.finki.wp.mindmend.model.HydroTrack;
+import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 import mk.ukim.finki.wp.mindmend.service.HydroTrackService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class HydroTrackController {
         this.hydroTrackService = hydroTrackService;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = {"/",""})
     public List<HydroTrack> findAllHydroTracks() {
         return hydroTrackService.findAllHydroTracks();
     }

@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.SleepTracker;
+import mk.ukim.finki.wp.mindmend.model.habits.SleepTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.SleepTrackerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.SleepTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;

@@ -1,15 +1,14 @@
 package mk.ukim.finki.wp.mindmend.service;
 
-import mk.ukim.finki.wp.mindmend.dto.MealPlannerDTO;
-import mk.ukim.finki.wp.mindmend.model.MealPlanner;
-import mk.ukim.finki.wp.mindmend.model.Recipe;
+import mk.ukim.finki.wp.mindmend.model.DTO.MealPlannerDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.MealPlanner;
 
 import java.util.List;
 
 public interface MealPlannerService {
-    List<MealPlannerDTO> findAllMealPlanners();
+    List<MealPlanner> findAllMealPlanners();
 
-    MealPlannerDTO findById(Long id);
+    MealPlanner findById(Long id);
 
     MealPlanner create();
 

@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.web;
 
 import mk.ukim.finki.wp.mindmend.model.DTO.MindfulMomentDTO;
-import mk.ukim.finki.wp.mindmend.model.MindfulMoment;
+import mk.ukim.finki.wp.mindmend.model.habits.MindfulMoment;
 import mk.ukim.finki.wp.mindmend.service.MindfulMomentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class MindfulMomentController {
         this.mindfulMomentService = mindfulMomentService;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = {"/",""})
     public List<MindfulMoment> findAllMindfulMoments() {
         return mindfulMomentService.findAllMindfulMoments();
     }

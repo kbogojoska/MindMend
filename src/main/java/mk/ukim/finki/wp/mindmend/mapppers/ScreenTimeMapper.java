@@ -1,9 +1,7 @@
 package mk.ukim.finki.wp.mindmend.mapppers;
 
-import mk.ukim.finki.wp.mindmend.dto.ActiveMoveTrackerDTO;
-import mk.ukim.finki.wp.mindmend.dto.ScreenTimeDTO;
-import mk.ukim.finki.wp.mindmend.model.ActiveMoveTracker;
-import mk.ukim.finki.wp.mindmend.model.ScreenTimeTracker;
+import mk.ukim.finki.wp.mindmend.model.DTO.ScreenTimeDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.ScreenTimeTracker;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,14 +1,14 @@
 package mk.ukim.finki.wp.mindmend.service;
 
-import mk.ukim.finki.wp.mindmend.dto.ActiveMoveTrackerDTO;
-import mk.ukim.finki.wp.mindmend.model.ActiveMoveTracker;
+import mk.ukim.finki.wp.mindmend.model.DTO.ActiveMoveTrackerDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.ActiveMoveTracker;
 
 import java.util.List;
 
 public interface ActiveMoveTrackerService {
-    List<ActiveMoveTrackerDTO> findAllMoveTrackers();
+    List<ActiveMoveTracker> findAllMoveTrackers();
 
-    ActiveMoveTrackerDTO findById(Long id);
+    ActiveMoveTracker findById(Long id);
 
     ActiveMoveTracker create(ActiveMoveTrackerDTO activeMoveTrackerDTO);
 

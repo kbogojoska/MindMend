@@ -1,7 +1,6 @@
 package mk.ukim.finki.wp.mindmend.service;
 
-import mk.ukim.finki.wp.mindmend.model.SleepTracker;
-import org.springframework.stereotype.Service;
+import mk.ukim.finki.wp.mindmend.model.habits.SleepTracker;
 
 import java.time.LocalTime;
 import java.util.List;

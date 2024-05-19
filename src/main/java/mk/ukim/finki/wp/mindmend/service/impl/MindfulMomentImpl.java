@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.MindfulMoment;
+import mk.ukim.finki.wp.mindmend.model.habits.MindfulMoment;
 import mk.ukim.finki.wp.mindmend.model.exceptions.MindfulMomentHabitDoesNotExistException;
 import mk.ukim.finki.wp.mindmend.repository.MindfulMomentRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;

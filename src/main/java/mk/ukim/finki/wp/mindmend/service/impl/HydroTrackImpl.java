@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
-import mk.ukim.finki.wp.mindmend.model.HydroTrack;
+import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.HydroTrackRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;

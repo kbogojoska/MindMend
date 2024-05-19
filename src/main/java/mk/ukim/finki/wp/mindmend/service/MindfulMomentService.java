@@ -1,6 +1,6 @@
 package mk.ukim.finki.wp.mindmend.service;
 
-import mk.ukim.finki.wp.mindmend.model.MindfulMoment;
+import mk.ukim.finki.wp.mindmend.model.habits.MindfulMoment;
 
 import java.time.LocalTime;
 import java.util.List;

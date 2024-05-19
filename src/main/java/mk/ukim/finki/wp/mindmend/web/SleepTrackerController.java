@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.mindmend.web;
 
 import mk.ukim.finki.wp.mindmend.model.DTO.SleepTrackerDTO;
-import mk.ukim.finki.wp.mindmend.model.SleepTracker;
+import mk.ukim.finki.wp.mindmend.model.habits.SleepTracker;
 import mk.ukim.finki.wp.mindmend.service.SleepTrackerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class SleepTrackerController {
         this.sleepTrackerService = sleepTrackerService;
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = {"/",""})
     public List<SleepTracker> findAllSleepTrackers() {
         return sleepTrackerService.findAllSleepTrackers();
     }

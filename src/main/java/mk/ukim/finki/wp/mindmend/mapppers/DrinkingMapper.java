@@ -1,9 +1,7 @@
 package mk.ukim.finki.wp.mindmend.mapppers;
 
-import mk.ukim.finki.wp.mindmend.dto.DrinkingTrackerDTO;
-import mk.ukim.finki.wp.mindmend.dto.SmokingTrackerDTO;
-import mk.ukim.finki.wp.mindmend.model.DrinkingTracker;
-import mk.ukim.finki.wp.mindmend.model.SmokingTracker;
+import mk.ukim.finki.wp.mindmend.model.DTO.DrinkingTrackerDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.DrinkingTracker;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,9 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.wp.mindmend.dto.ActiveMoveTrackerDTO;
+import mk.ukim.finki.wp.mindmend.model.DTO.ActiveMoveTrackerDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.ActiveMoveMapper;
-import mk.ukim.finki.wp.mindmend.model.ActiveMoveTracker;
+import mk.ukim.finki.wp.mindmend.model.habits.ActiveMoveTracker;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.exceptions.ActiveMoveTrackerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.ActiveMoveTrackerRepository;
@@ -20,13 +20,15 @@ public class ActiveMoveTrackerServiceImpl implements ActiveMoveTrackerService {
     private final ApplicationUserService applicationUserService;
 
     @Override
-    public List<ActiveMoveTrackerDTO> findAllMoveTrackers() {
-        return ActiveMoveMapper.MapToListViewModel(this.activeMoveTrackerRepository.findAll());
+    public List<ActiveMoveTracker> findAllMoveTrackers() {
+//        return ActiveMoveMapper.MapToListViewModel(this.activeMoveTrackerRepository.findAll());
+        return activeMoveTrackerRepository.findAll();
     }
 
     @Override
-    public ActiveMoveTrackerDTO findById(Long id) {
-        return ActiveMoveMapper.MapToViewModel(this.activeMoveTrackerRepository.findById(id).orElseThrow(ActiveMoveTrackerNotFoundException::new));
+    public ActiveMoveTracker findById(Long id) {
+//        return ActiveMoveMapper.MapToViewModel(this.activeMoveTrackerRepository.findById(id).orElseThrow(ActiveMoveTrackerNotFoundException::new));
+        return this.activeMoveTrackerRepository.findById(id).orElseThrow(ActiveMoveTrackerNotFoundException::new);
     }
 
     @Override

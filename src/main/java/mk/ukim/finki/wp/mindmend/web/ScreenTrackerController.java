@@ -1,9 +1,8 @@
 package mk.ukim.finki.wp.mindmend.web;
 
-import mk.ukim.finki.wp.mindmend.dto.ScreenTimeDTO;
-import mk.ukim.finki.wp.mindmend.model.ScreenTimeTracker;
+import mk.ukim.finki.wp.mindmend.model.DTO.ScreenTimeDTO;
+import mk.ukim.finki.wp.mindmend.model.habits.ScreenTimeTracker;
 import mk.ukim.finki.wp.mindmend.service.ScreenTimeTrackerService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,13 +18,13 @@ public class ScreenTrackerController {
     }
 
     @GetMapping(value={"","/"})
-    public List<ScreenTimeDTO> getScreenTrackers()
+    public List<ScreenTimeTracker> getScreenTrackers()
     {
         return screenTimeTrackerService.findAllScreenTimeTrackers();
     }
 
     @GetMapping("/{screenId}")
-    public ScreenTimeDTO getScreenTrackerById(@PathVariable Long screenId)
+    public ScreenTimeTracker getScreenTrackerById(@PathVariable Long screenId)
     {
         return this.screenTimeTrackerService.findById(screenId);
     }

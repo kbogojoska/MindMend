@@ -2,7 +2,7 @@ package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.SocialActivity;
-import mk.ukim.finki.wp.mindmend.model.SocialSphere;
+import mk.ukim.finki.wp.mindmend.model.habits.SocialSphere;
 import mk.ukim.finki.wp.mindmend.model.exceptions.SocialSphereNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.SocialActivityRepository;
 import mk.ukim.finki.wp.mindmend.repository.SocialSphereRepository;
@@ -11,7 +11,6 @@ import mk.ukim.finki.wp.mindmend.service.SocialSphereService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SocialSphereImpl implements SocialSphereService {
