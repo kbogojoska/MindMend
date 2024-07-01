@@ -7,14 +7,11 @@ function Header(props) {
     const[isMenuVisible, setIsMenuVisible] = useState(false);
 
     const toggleMenu = () => {
-        console.log("toggle " + isMenuOpen);
         setIsMenuOpen(!isMenuOpen);
         setIsMenuVisible(!isMenuVisible)
     }
 
     document.addEventListener('click', event => {
-        console.log(event.target);
-        console.log(isMenuOpen);
         if(isMenuOpen && event.target.id !== "menu-btn" && event.target.className !== "header-component") {
             toggleMenu();
         }
@@ -33,10 +30,6 @@ function Header(props) {
                     ))}
                 </ul>
             </div>
-            
-            {/* <div className="header-title">
-                <h1 className="text-light text-center">Habits Display</h1>
-            </div> */}
         </header>
         </div>
     )
