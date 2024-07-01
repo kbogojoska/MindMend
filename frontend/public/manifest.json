@@ -2,16 +2,27 @@
   "name": "MindMend",
   "version": "1.0.0",
   "description": "This is an extension to help you build a better you, focused on health and habits.",
+  "host_permissions": [
+    "http://localhost:8080/*",
+    "http://*/*",
+    "https://*/*"
+  ],
   "manifest_version": 3,
   "author": "Katerina",
-  "action": {
-    "default_popup": "src/main/resources/templates/index.html",
-    "default_title": "MindMend"
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "action" : {
+
   },
   "background": {
-    "service_worker": "src/main/resources/static/background.js"
+    "service_worker": "background.js"
   },
   "permissions": [
+    "activeTab",
+    "scripting",
     "tabs",
     "windows",
     "system.display"

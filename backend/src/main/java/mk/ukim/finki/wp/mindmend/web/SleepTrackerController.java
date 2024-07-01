@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/api/sleep-tracker")
 public class SleepTrackerController {
     private final SleepTrackerService sleepTrackerService;
