@@ -1,0 +1,92 @@
+.header-component {
+    background: rgb(31,188,255);
+    background: linear-gradient(0deg, rgba(31,188,255,1) 0%, rgba(191,108,255,1) 73%);  
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 600px;
+    background-color: #ffffff; 
+    border-radius: 15px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
+    display: flex;
+    align-items: center;
+}
+
+.header-component h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header-title {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-toggle {
+    font-size: 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+    outline: none;
+    transition: width 0.3s ease;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    width: 200px;
+    padding: 10px;
+}
+
+#menu-btn {
+    width: 100%;
+    padding: 11px 16px;
+}
+
+.menu.open {
+    display: block;
+    background: rgb(31, 188, 255);
+    background: linear-gradient(
+        0deg,
+        rgba(191, 108, 255, 1) 0%,
+        rgba(31, 188, 255, 1) 100%
+    );
+    opacity: 0.88;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    color: #fff;
+    border-bottom: none;
+    border-radius: 10px;
+}
+
+.menu ul li:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+}
+
+.footer-component {
+    background: rgb(31,188,255);
+    background: linear-gradient(0deg, rgba(31,188,255,1) 0%, rgba(191,108,255,1) 73%);
+    padding: 10px;
+}
+
+.card-habit {
+    width: 18rem;
+}
