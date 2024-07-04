@@ -1,0 +1,18 @@
+@keyframes slideInTop {
+    from {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fade-in-title {
+    animation: slideInTop 1s ease-in-out;
+}
+
+.fade-in-content {
+    animation: slideInTop 1s ease-in-out;
+}

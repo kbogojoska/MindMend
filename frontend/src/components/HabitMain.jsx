@@ -1,13 +1,11 @@
-import '../css/App.css';
 import React from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
-import Header from './HeaderFooter/Header';
-import Footer from './HeaderFooter/Footer';
-import Body from './Body';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Habit from './Habit';
 
-function App() {
+function HabitMain() {    
 
-  const data = [
+    const data = [
         {
           "name": "sleeptracker",
           "attributes": [
@@ -70,21 +68,32 @@ function App() {
             "application_user_id"
           ]
         }
-  ]
+    ]
 
-  const habitNames = data.map(habit => habit.name);
+    const StyledGrid = styled(Grid)(({ theme }) => ({
+        margin: theme.spacing(2),
+        padding: theme.spacing(2),
+        boxShadow: theme.shadows[3],
+      }));
 
-  return (
-    <Router>
-      <div>
-        <Header habits={habitNames} />
-        {/* <Grid container justifyContent="center" alignItems="center" mt={10}> */}
-          <Body/>
-        {/* </Grid> */}
-        <Footer />
-      </div>
-    </Router>
-  );
+    return (
+        <div>
+            <Grid container justifyContent="center" alignItems="center">
+                <StyledGrid item xs={10} sm={10} md={10} lg={10}>
+                    <Grid container justifyContent="center" >
+                        {data.map((element, index) => (
+                        <Grid item xs={12} sm={10} md={6} lg={3.7} key={index} p={2}>
+                            <Habit
+                                name={element.name}
+                                attributes={element.attributes}
+                            />
+                        </Grid>
+                        ))}
+                    </Grid>
+                </StyledGrid>
+            </Grid>
+        </div>
+    )
 }
 
-export default App;
+export default HabitMain
