@@ -1,0 +1,28 @@
+.footer-component {
+    padding: 10px;
+    color: #5961b3;
+}
+
+.footer-component>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copyright-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid transparent;
+    border-radius: 15px;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)), linear-gradient(180deg, rgba(31, 188, 255, 1) 0%, rgba(191, 108, 255, 1) 73%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+.copyright-text p {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 7px;
+}

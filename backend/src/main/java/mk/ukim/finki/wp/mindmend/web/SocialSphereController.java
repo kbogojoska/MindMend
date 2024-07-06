@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin({"chrome-extension://iofmjaeciopfhemggjcafhdbhnebdnmo", "http://localhost:3000"})
 @RequestMapping("/api/social-sphere")
 public class SocialSphereController {
     private final SocialSphereService socialSphereService;

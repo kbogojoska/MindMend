@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin({"chrome-extension://iofmjaeciopfhemggjcafhdbhnebdnmo", "http://localhost:3000"})
 @RequestMapping("/api/hydro-track")
 public class HydroTrackController {
     private final HydroTrackService hydroTrackService;

@@ -1,0 +1,119 @@
+.header-component {
+    background: rgb(31,188,255);
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 600px;
+    background-color: #ffffff; 
+    border-radius: 15px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background-image: linear-gradient(white, white), linear-gradient(0deg, rgba(31, 188, 255, 1) 0%, rgba(191, 108, 255, 1) 73%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+.header-component h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header-title {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-toggle {
+    font-size: 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+    outline: none;
+    transition: width 0.3s ease;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 48px;
+    left: -2px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    width: 200px;
+    border: 0.15rem solid transparent;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)), linear-gradient(180deg, rgba(31, 188, 255, 1) 0%, rgba(191, 108, 255, 1) 73%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+#menu-btn {
+    width: 100%;
+    padding: 4px 12px 5px 12px;
+    font-size: 20px;
+}
+
+#menu-btn span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu.open {
+    display: block;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 7px;
+    padding-left: 1px;
+}
+
+.menu ul li {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 10px;
+    border-bottom: none;
+    border-radius: 10px;    
+    color: rgb(101, 111, 204);
+}
+
+.menu ul li:hover {
+    background-color: rgb(101, 111, 204, 0.2);
+    color: #5961b3;
+    cursor: pointer;
+}
+
+.menu ul li span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-content {
+    padding-bottom: 4px;
+}
+
+.chevron-down {
+    color: #7f8bff;
+}
+
+.chevron-right {
+    font-size: 14px;
+    padding-right: 6px;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

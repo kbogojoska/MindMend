@@ -1,0 +1,131 @@
+.activity-list {
+  font-size: 14px;
+}
+
+/* add button */
+
+#add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7f8bff;
+  margin: 1rem 2.5rem 1rem 0;
+  padding: 1.5px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(white, white),
+    linear-gradient(0deg, rgba(31, 188, 255, 1) 0%, rgba(191, 108, 255, 1) 73%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  cursor: pointer;
+}
+
+#add-btn:hover {
+  color: #5961b3;
+  cursor: pointer;
+}
+
+.crud-button-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 8px 7px 8px;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* edit/delete buttons */
+
+#edit-delete-container {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  margin: 8px 14px 0 0;
+}
+
+.edit-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7f8bff;
+  margin-right: 0.4rem;
+  padding: 1.5px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(white, white),
+    linear-gradient(0deg, rgba(31, 188, 255, 1) 0%, rgba(191, 108, 255, 1) 73%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  cursor: pointer;
+}
+
+.edit-delete-btn:hover {
+  color: #5961b3;
+  cursor: pointer;
+}
+
+/* add form */
+
+#add-form-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7f8bff;
+  padding: 1.5px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(white, white),
+    linear-gradient(0deg, rgba(31, 188, 255, 1) 0%, rgba(191, 108, 255, 1) 73%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  cursor: pointer;
+}
+
+#add-form-button span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px;
+  cursor: pointer;
+}
+
+#add-form-button span:hover {
+  border-radius: 8.5px;
+  color: #5961b3;
+  cursor: pointer;
+}
+
+/* errors */
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 6rem 0 6rem;
+  padding: 1rem 0.5rem 1rem 0.5rem;
+  border-radius: 10px;
+  background-color: rgb(255, 0, 0, 0.2);
+}
+
+.hide-errorless-div {
+  display: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  margin-top: 0.25rem;
+  text-align: center;
+  width: 100%;
+}
