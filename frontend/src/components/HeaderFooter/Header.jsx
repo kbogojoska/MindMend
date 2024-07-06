@@ -29,7 +29,7 @@ function Header(props) {
     return (
         <div>
         <header className="header-component header-container">                      
-            <div id="menu-btn" type="button" className="menu-toggle" ref={menuButtonRef} onClick={toggleMenu}>
+            <div id="menu-btn" className="menu-toggle" ref={menuButtonRef} onClick={toggleMenu}>
                 <span className="chevron-down unselectable">
                     ☰
                 </span>
