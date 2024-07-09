@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/active-move")
+@CrossOrigin({"chrome-extension://migfoencdaebpjdhkjodepnekmapmjlb", "http://localhost:3000"})
+@RequestMapping("/api/activemove-tracker")
 @RequiredArgsConstructor
 public class ActiveMoveController {
     private final ActiveMoveTrackerServiceImpl activeMoveTrackerService;
@@ -29,13 +30,13 @@ public class ActiveMoveController {
     @PostMapping("/add")
     public ActiveMoveTracker create(@RequestBody ActiveMoveTrackerDTO activeMoveTrackerDTO)
     {
-        return this.activeMoveTrackerService.create(activeMoveTrackerDTO);
+        return this.activeMoveTrackerService.create(activeMoveTrackerDTO.getDailySteps());
     }
 
     @PostMapping("/edit/{activeId}")
     public ActiveMoveTracker edit(@RequestBody ActiveMoveTrackerDTO activeMoveTrackerDTO, @PathVariable Long activeId)
     {
-        return this.activeMoveTrackerService.edit(activeId,activeMoveTrackerDTO);
+        return this.activeMoveTrackerService.edit(activeId,activeMoveTrackerDTO.getDailySteps());
     }
 
     @PostMapping("/delete/{activeId}")

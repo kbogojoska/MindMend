@@ -39,6 +39,6 @@ public class ScreenTimeTracker {
         this.workTimeStart = workTimeStart;
         this.workTimeEnd = workTimeEnd;
         this.nextBreakTime = workTimeStart.plusMinutes(20);
-        this.nextBreakTime = nextBreakTime.plusSeconds(20);
+        this.endOfBreakTime = nextBreakTime.plusSeconds(20);
     }
 }

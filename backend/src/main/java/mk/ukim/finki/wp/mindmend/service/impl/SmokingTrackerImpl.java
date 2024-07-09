@@ -32,17 +32,19 @@ public class SmokingTrackerImpl implements SmokingTrackerService {
     }
 
     @Override
-    public SmokingTracker create(SmokingTrackerDTO smokingTrackerDTO) {
+    public SmokingTracker create(Integer numCigarettes, Integer maxCigarettes) {
         ApplicationUser applicationUser = this.userService.create("smoke", "s", "s#");
         //making sure that it's not the same number as the threshold for cigarettesPerDay
         //or should the user update daily the number of cigarettes and compare it to the threshold
-        return this.smokingRepository.save(new SmokingTracker(smokingTrackerDTO.getCigarettesPerDay(), applicationUser));
+        return this.smokingRepository.save(new SmokingTracker(numCigarettes, maxCigarettes, applicationUser));
     }
 
     @Override
-    public SmokingTracker edit(Long id, SmokingTrackerDTO smokingTrackerDTO) {
+    public SmokingTracker edit(Long id, Integer numOfCigarettesPerDay, Integer maxCigarettes) {
         SmokingTracker smokingTracker = this.smokingRepository.findById(id).orElseThrow(SmokingTrackerNotFoundException::new);
-        smokingTracker.setCigarettesPerDay(smokingTrackerDTO.getCigarettesPerDay());
+        smokingTracker.setCigarettesPerDay(numOfCigarettesPerDay);
+        if (maxCigarettes != null)
+            smokingTracker.setMaxCigarettesPerDay(maxCigarettes);
         return smokingRepository.save(smokingTracker);
     }
 

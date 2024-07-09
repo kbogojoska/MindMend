@@ -4,13 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class SmokingTrackerDTO {
-    private int cigarettesPerDay;
+    private Integer cigarettesPerDay;
+    private Integer maxCigarettesPerDay;
 
-    public SmokingTrackerDTO() {
-        this.cigarettesPerDay=5;
-    }
-
-    public SmokingTrackerDTO(int cigarettesPerDay) {
+    public SmokingTrackerDTO(Integer cigarettesPerDay, Integer maxCigarettesPerDay) {
         this.cigarettesPerDay = cigarettesPerDay;
+        this.maxCigarettesPerDay=maxCigarettesPerDay;
     }
 }

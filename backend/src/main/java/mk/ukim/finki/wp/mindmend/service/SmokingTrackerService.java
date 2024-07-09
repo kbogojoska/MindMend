@@ -8,7 +8,7 @@ import java.util.List;
 public interface SmokingTrackerService {
     List<SmokingTracker> findAllSmokingTrackers();
     SmokingTracker findById(Long id);
-    SmokingTracker create(SmokingTrackerDTO smokingTrackerDTO);
-    SmokingTracker edit(Long id, SmokingTrackerDTO smokingTrackerDTO);
+    SmokingTracker create(Integer numCigarettes, Integer maxCigarettes);
+    SmokingTracker edit(Long id, Integer numCigarettes, Integer maxCigarettes);
     SmokingTracker delete(Long id);
 }

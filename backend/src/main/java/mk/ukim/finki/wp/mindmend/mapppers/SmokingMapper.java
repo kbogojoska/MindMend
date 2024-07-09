@@ -10,7 +10,8 @@ public class SmokingMapper {
     public static SmokingTrackerDTO MapToViewModel(SmokingTracker smokingTracker)
     {
         return new SmokingTrackerDTO(
-                smokingTracker.getCigarettesPerDay()
+                smokingTracker.getCigarettesPerDay(),
+                smokingTracker.getMaxCigarettesPerDay()
         );
     }
     public static List<SmokingTrackerDTO> MapToListViewModel(List<SmokingTracker> smokingTrackers){

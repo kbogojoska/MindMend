@@ -4,12 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class DrinkingTrackerDTO {
-    private int numOfDrinks;
+    private Integer numOfDrinks;
+    private Integer maxDrinks;
 
-    public DrinkingTrackerDTO(int numOfDrinks) {
+    public DrinkingTrackerDTO(Integer numOfDrinks, Integer maxDrinks) {
         this.numOfDrinks = numOfDrinks;
-    }
-
-    public DrinkingTrackerDTO() {
+        this.maxDrinks=maxDrinks;
     }
 }

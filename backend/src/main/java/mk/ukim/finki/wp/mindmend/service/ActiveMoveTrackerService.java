@@ -10,9 +10,9 @@ public interface ActiveMoveTrackerService {
 
     ActiveMoveTracker findById(Long id);
 
-    ActiveMoveTracker create(ActiveMoveTrackerDTO activeMoveTrackerDTO);
+    ActiveMoveTracker create(Integer dailySteps);
 
-    ActiveMoveTracker edit(Long id, ActiveMoveTrackerDTO activeMoveTrackerDTO);
+    ActiveMoveTracker edit(Long id, Integer dailySteps);
 
     ActiveMoveTracker delete(Long id);
 

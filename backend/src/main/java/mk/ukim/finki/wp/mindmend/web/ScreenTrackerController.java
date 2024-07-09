@@ -9,6 +9,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin({"chrome-extension://migfoencdaebpjdhkjodepnekmapmjlb", "http://localhost:3000"})
 @RequestMapping("/api/screen-tracker")
 public class ScreenTrackerController {
     private final ScreenTimeTrackerService screenTimeTrackerService;
@@ -32,13 +33,13 @@ public class ScreenTrackerController {
     @PostMapping("/add")
     public ScreenTimeTracker create(@RequestBody ScreenTimeDTO screenTimeDTO)
     {
-        return this.screenTimeTrackerService.create(screenTimeDTO);
+        return this.screenTimeTrackerService.create(screenTimeDTO.getWorkTimeStart(),screenTimeDTO.getWorkTimeEnd());
     }
 
     @PostMapping("/edit/{screenId}")
     public ScreenTimeTracker edit(@RequestBody ScreenTimeDTO screenTimeDTO, @PathVariable Long screenId)
     {
-        return this.screenTimeTrackerService.edit(screenId,screenTimeDTO);
+        return this.screenTimeTrackerService.edit(screenId,screenTimeDTO.getWorkTimeStart(),screenTimeDTO.getWorkTimeEnd());
     }
 
     @PostMapping("/delete/{screenId}")

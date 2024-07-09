@@ -10,7 +10,8 @@ public class DrinkingMapper {
     public static DrinkingTrackerDTO MapToViewModel(DrinkingTracker drinkingTracker)
     {
         return new DrinkingTrackerDTO(
-                drinkingTracker.getNumOfDrinks()
+                drinkingTracker.getNumOfDrinks(),
+                drinkingTracker.getMaxDrinks()
         );
     }
     public static List<DrinkingTrackerDTO> MapToListViewModel(List<DrinkingTracker> drinkingTrackers){

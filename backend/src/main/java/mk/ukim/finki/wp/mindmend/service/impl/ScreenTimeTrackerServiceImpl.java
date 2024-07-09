@@ -11,6 +11,7 @@ import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
 import mk.ukim.finki.wp.mindmend.service.ScreenTimeTrackerService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -33,23 +34,23 @@ public class ScreenTimeTrackerServiceImpl implements ScreenTimeTrackerService {
     }
 
     @Override
-    public ScreenTimeTracker create(ScreenTimeDTO screenTimeDTO) {
+    public ScreenTimeTracker create(LocalTime workTimeStart, LocalTime workTimeEnd) {
         ApplicationUser user = applicationUserService.create("new", "741", "new@gmail.com");
-        if(screenTimeDTO.getWorkTimeStart()==null && screenTimeDTO.getWorkTimeEnd()==null)
+        if(workTimeStart==null && workTimeEnd==null)
         {
             return screenRepository.save(new ScreenTimeTracker(user));
         }
         else
-            return screenRepository.save(new ScreenTimeTracker(user,screenTimeDTO.getWorkTimeStart(),screenTimeDTO.getWorkTimeEnd()));
+            return screenRepository.save(new ScreenTimeTracker(user,workTimeStart,workTimeEnd));
     }
 
     @Override
-    public ScreenTimeTracker edit(Long id, ScreenTimeDTO screenTimeDTO) {
+    public ScreenTimeTracker edit(Long id, LocalTime workTimeStart, LocalTime workTimeEnd) {
         ScreenTimeTracker screenTimeTracker=screenRepository.findById(id).orElseThrow(ScreenTimeTrackerNotFoundException::new);
-        screenTimeTracker.setWorkTimeStart(screenTimeDTO.getWorkTimeStart());
-        screenTimeTracker.setWorkTimeEnd(screenTimeDTO.getWorkTimeEnd());
-        screenTimeTracker.setNextBreakTime(screenTimeDTO.getNextBreakTime());
-        screenTimeTracker.setEndOfBreakTime(screenTimeDTO.getEndOfBreakTime());
+        screenTimeTracker.setWorkTimeStart(workTimeStart);
+        screenTimeTracker.setWorkTimeEnd(workTimeEnd);
+        screenTimeTracker.setNextBreakTime(screenTimeTracker.getWorkTimeStart().plusMinutes(20));
+        screenTimeTracker.setEndOfBreakTime(screenTimeTracker.getNextBreakTime().plusSeconds(20));
         return screenRepository.save(screenTimeTracker);
     }
 

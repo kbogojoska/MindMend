@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/smoke-tracker")
+@CrossOrigin({"chrome-extension://migfoencdaebpjdhkjodepnekmapmjlb", "http://localhost:3000"})
+@RequestMapping("/api/smoking-tracker")
 public class SmokingTrackerController {
     private final SmokingTrackerService smokingTrackerService;
 
@@ -28,15 +29,17 @@ public class SmokingTrackerController {
 
     @PostMapping("/add")
     public SmokingTracker create(@RequestBody SmokingTrackerDTO smokingTrackerDTO) {
-        return this.smokingTrackerService.create(smokingTrackerDTO);
+        return this.smokingTrackerService.create(smokingTrackerDTO.getCigarettesPerDay(),smokingTrackerDTO.getMaxCigarettesPerDay());
     }
 
     @PostMapping("/edit/{id}")
     public SmokingTracker edit(@RequestBody SmokingTrackerDTO smokingTrackerDTO, @PathVariable Long id) {
-        return this.smokingTrackerService.edit(id, smokingTrackerDTO);
+        return this.smokingTrackerService.edit(id,
+                smokingTrackerDTO.getCigarettesPerDay(),
+                smokingTrackerDTO.getMaxCigarettesPerDay());
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public SmokingTracker delete(@PathVariable Long id) {
         return this.smokingTrackerService.delete(id);
     }

@@ -32,18 +32,18 @@ public class ActiveMoveTrackerServiceImpl implements ActiveMoveTrackerService {
     }
 
     @Override
-    public ActiveMoveTracker create(ActiveMoveTrackerDTO activeMoveTrackerDTO) {
+    public ActiveMoveTracker create(Integer dailySteps) {
         ApplicationUser user=applicationUserService.create("new","147","new@gmail.com");
-        if (activeMoveTrackerDTO.getDailySteps() != null)
-            return this.activeMoveTrackerRepository.save(new ActiveMoveTracker(user,activeMoveTrackerDTO.getDailySteps()));
+        if (dailySteps != null)
+            return this.activeMoveTrackerRepository.save(new ActiveMoveTracker(user,dailySteps));
         return this.activeMoveTrackerRepository.save(new ActiveMoveTracker(user));
     }
 
     @Override
-    public ActiveMoveTracker edit(Long id, ActiveMoveTrackerDTO activeMoveTrackerDTO) {
+    public ActiveMoveTracker edit(Long id, Integer dailySteps) {
         ActiveMoveTracker tracker = activeMoveTrackerRepository.findById(id).
                 orElseThrow(ActiveMoveTrackerNotFoundException::new);
-        tracker.setDailyStepsGoal(activeMoveTrackerDTO.getDailySteps());
+        tracker.setDailyStepsGoal(dailySteps);
         return activeMoveTrackerRepository.save(tracker);
     }
 

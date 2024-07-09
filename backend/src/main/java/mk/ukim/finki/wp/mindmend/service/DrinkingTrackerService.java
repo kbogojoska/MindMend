@@ -8,7 +8,7 @@ import java.util.List;
 public interface DrinkingTrackerService {
     List<DrinkingTracker> findAllDrinkingTrackers();
     DrinkingTracker findById(Long id);
-    DrinkingTracker create(DrinkingTrackerDTO drinkingTrackerDTO);
-    DrinkingTracker edit(Long id, DrinkingTrackerDTO drinkingTrackerDTO);
+    DrinkingTracker create(Integer numOfDrinks, Integer maxDrinks);
+    DrinkingTracker edit(Long id, Integer numOfDrinks, Integer maxDrinks);
     DrinkingTracker delete(Long id);
 }

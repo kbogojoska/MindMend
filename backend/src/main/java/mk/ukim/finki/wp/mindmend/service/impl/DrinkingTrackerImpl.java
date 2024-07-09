@@ -32,15 +32,17 @@ public class DrinkingTrackerImpl implements DrinkingTrackerService {
     }
 
     @Override
-    public DrinkingTracker create(DrinkingTrackerDTO drinkingTrackerDTO) {
+    public DrinkingTracker create(Integer numOfDrinks, Integer maxDrinks) {
         ApplicationUser user = this.userService.create("drink", "d", "lkl");
-        return drinkingRepository.save(new DrinkingTracker(drinkingTrackerDTO.getNumOfDrinks(), user));
+        return drinkingRepository.save(new DrinkingTracker(numOfDrinks,maxDrinks, user));
     }
 
     @Override
-    public DrinkingTracker edit(Long id, DrinkingTrackerDTO drinkingTrackerDTO) {
+    public DrinkingTracker edit(Long id,Integer numOfDrinks, Integer maxDrinks) {
         DrinkingTracker drinkingTracker=drinkingRepository.findById(id).orElseThrow(DrinkingTrackerNotFoundException::new);
-        drinkingTracker.setNumOfDrinks(drinkingTrackerDTO.getNumOfDrinks());
+        drinkingTracker.setNumOfDrinks(numOfDrinks);
+        if(maxDrinks!=null)
+            drinkingTracker.setMaxDrinks(maxDrinks);
         return drinkingRepository.save(drinkingTracker);
     }
 
