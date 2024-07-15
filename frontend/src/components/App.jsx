@@ -16,7 +16,7 @@ function App() {
     "smoking-tracker",
     "meal-planner",
     "activemove-tracker",
-    "screen-tracker"
+    "screentime-tracker"
   ];
 
   return (
