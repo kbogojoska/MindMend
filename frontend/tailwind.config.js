@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/css/*.{js,ts,jsx,tsx,mdx,css}",
-    "./src/css/**/*.{js,ts,jsx,tsx,mdx,css}"
+    "./src/components/Home.{js,ts,jsx,tsx,mdx}",
+    "./src/components/HabitDisclosures/*.{js,ts,jsx,tsx,mdx}",
+    "./src/css/Home.{js,ts,jsx,tsx,mdx,css}"
   ],
   theme: {
     extend: {
@@ -17,5 +17,7 @@ module.exports = {
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  }
 }
-
