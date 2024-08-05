@@ -15,7 +15,7 @@ function HydroTrackerDisclosure() {
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="text-base flex font-medium">
-          <IoWaterSharp size={20} className='mr-2'/>Hydradtion Tracker
+          <IoWaterSharp size={20} className='mr-2'/>Hydration Tracker
           </span>
           <ChevronDownIcon
             className={`w-5 h-5 ml-2 text-gray-600 transform ${isOpen ? 'rotate-180' : ''}`}

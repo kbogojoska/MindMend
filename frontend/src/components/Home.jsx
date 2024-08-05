@@ -1,5 +1,4 @@
-import React from "react";
-import '../css/Home.css';
+import React from 'react';
 import SmokingTrackerDisclosure from "./HabitDisclosures/SmokingTrackerDisclosure";
 import ActiveMoveDisclosure from "./HabitDisclosures/ActiveMoveDisclosure";
 import DrinkingTrackerDisclosure from "./HabitDisclosures/DrinkingTrackerDisclosure";
@@ -9,12 +8,12 @@ import ScreenTimeDisclosure from "./HabitDisclosures/ScreenTimeDisclosure";
 import SleepTrackerDisclosure from "./HabitDisclosures/SleepTrackerDisclosure";
 import MindfulMomentDisclosure from "./HabitDisclosures/MindfulMomentDisclosure";
 import SocialSphereDisclosure from "./HabitDisclosures/SocialSphereDisclosure";
-import { Disclosure } from '@headlessui/react';
+import '../css/Home.css';
 
-const Home = () => {
+
+function Home() {
   return (
-    <div className="bg-white rounded-xl">
-      {/* Home Section */}
+    <div id="home" className="bg-white rounded-xl fade-in-content">
       <section className="py-8 md:py-16">
         <div className="container max-w-screen-xl mx-auto px-4">
           <header className="flex flex-col xl:flex-row justify-between items-center">
@@ -26,8 +25,8 @@ const Home = () => {
                 Track and improve your daily habits for a healthier lifestyle.
               </p>
             </div>
-            <div className="mx-auto xl:mx-0">
-              <img src="/images/home-img.svg" alt="Image" />
+            <div className="mx-auto xl:mx-0 w-full xl:w-auto">
+              <img src="/images/home-img.svg" alt="home" />
             </div>
           </header>
         </div>
@@ -51,7 +50,7 @@ const Home = () => {
 
       <div className="py-4 md:py-6"></div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

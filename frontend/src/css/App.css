@@ -1,3 +1,9 @@
 .card-habit {
-    width: 18rem;
+  width: 18rem;
+}
+
+body {
+  background-image: url("/public/images/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
