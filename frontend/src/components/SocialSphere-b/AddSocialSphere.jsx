@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/SocialSphere/SocialSphere.css";
 
 function AddSocialSphere() {
@@ -30,12 +29,6 @@ function AddSocialSphere() {
     }
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {!errors.connectionErrorAdd ? (
@@ -49,7 +42,7 @@ function AddSocialSphere() {
           {loading ? (
             <CircularProgress />
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -58,6 +51,9 @@ function AddSocialSphere() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               <form onSubmit={handleSubmit} className="d-flex justify-content-center align-items-center">
@@ -66,7 +62,7 @@ function AddSocialSphere() {
                   <span>Add Social Sphere</span>
                 </button>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (

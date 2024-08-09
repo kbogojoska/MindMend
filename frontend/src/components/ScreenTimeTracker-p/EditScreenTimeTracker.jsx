@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/ScreenTimeTracker/ScreenTimeTracker.css";
 
 function EditScreenTimeTracker() {
@@ -52,7 +52,9 @@ function EditScreenTimeTracker() {
 
     if (!formData.workTimeStart || !formData.workTimeEnd) {
       setErrors({
-        workTimeStart: !formData.workTimeStart ? "Work time start is required!" : "",
+        workTimeStart: !formData.workTimeStart
+          ? "Work time start is required!"
+          : "",
         workTimeEnd: !formData.workTimeEnd ? "Work time end is required!" : "",
         connectionErrorEditById: "",
         connectionErrorFindById: "",
@@ -70,7 +72,8 @@ function EditScreenTimeTracker() {
     } catch (error) {
       setErrors((prevState) => ({
         ...prevState,
-        connectionErrorEditById: "There was an error editing the screen time tracker",
+        connectionErrorEditById:
+          "There was an error editing the screen time tracker",
       }));
     } finally {
       setLoading(false);
@@ -91,12 +94,6 @@ function EditScreenTimeTracker() {
     }));
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {loading ? (
@@ -111,7 +108,7 @@ function EditScreenTimeTracker() {
           mt={2}
           className="fade-in-content"
         >
-          <StyledGrid
+          <Grid
             item
             xs={10}
             sm={10}
@@ -120,15 +117,22 @@ function EditScreenTimeTracker() {
             sx={{
               boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
               borderRadius: "20px",
+              padding: "16px",
+              backgroundColor: "white",
+              margin: "16px",
             }}
           >
             {(errors.workTimeStart || errors.workTimeEnd) && (
-              <div className="d-flex justify-content-center align-items-center error-container">
+              <div className="flex flex-col items-center mt-5">
                 {errors.workTimeStart && (
-                  <div className="p-2 error">{errors.workTimeStart}</div>
+                  <Alert severity="error" className="mb-2">
+                    {errors.workTimeStart}
+                  </Alert>
                 )}
                 {errors.workTimeEnd && (
-                  <div className="p-2 error">{errors.workTimeEnd}</div>
+                  <Alert severity="error" className="mb-2">
+                    {errors.workTimeEnd}
+                  </Alert>
                 )}
               </div>
             )}
@@ -148,7 +152,9 @@ function EditScreenTimeTracker() {
                     required
                   />
                 </div>
-                {errors.workTimeStart && <div className="p-2 error">{errors.workTimeStart}</div>}
+                {errors.workTimeStart && (
+                  <div className="p-2 error">{errors.workTimeStart}</div>
+                )}
               </div>
               <div className="input-group">
                 <label htmlFor="workTimeEnd" className="label-for-form">
@@ -165,7 +171,9 @@ function EditScreenTimeTracker() {
                     required
                   />
                 </div>
-                {errors.workTimeEnd && <div className="p-2 error">{errors.workTimeEnd}</div>}
+                {errors.workTimeEnd && (
+                  <div className="p-2 error">{errors.workTimeEnd}</div>
+                )}
               </div>
               <div className="position-button">
                 <button id="edit-form-button" type="submit">
@@ -173,7 +181,7 @@ function EditScreenTimeTracker() {
                 </button>
               </div>
             </form>
-          </StyledGrid>
+          </Grid>
         </Grid>
       )}
     </>

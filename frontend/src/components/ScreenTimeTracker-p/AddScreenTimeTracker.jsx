@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/ScreenTimeTracker/ScreenTimeTracker.css";
-
 
 function AddScreenTimeTracker() {
   const [formData, setFormData] = useState({
@@ -27,7 +26,9 @@ function AddScreenTimeTracker() {
 
     if (!formData.workTimeStart || !formData.workTimeEnd) {
       setErrors({
-        workTimeStart: !formData.workTimeStart ? "Work start time is required!" : "",
+        workTimeStart: !formData.workTimeStart
+          ? "Work start time is required!"
+          : "",
         workTimeEnd: !formData.workTimeEnd ? "Work end time is required!" : "",
       });
       return;
@@ -35,7 +36,10 @@ function AddScreenTimeTracker() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8080/api/screen-tracker/add", formData);
+      await axios.post(
+        "http://localhost:8080/api/screen-tracker/add",
+        formData
+      );
       navigate("/screen-tracker");
     } catch (error) {
       setErrors((prevState) => ({
@@ -59,12 +63,6 @@ function AddScreenTimeTracker() {
     }));
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {!errors.connectionErrorAdd ? (
@@ -78,7 +76,7 @@ function AddScreenTimeTracker() {
           {loading ? (
             <CircularProgress />
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -87,25 +85,29 @@ function AddScreenTimeTracker() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               {(errors.workTimeStart || errors.workTimeEnd) && (
-                <div className="d-flex justify-content-center align-items-center error-container">
+                <div className="flex flex-col items-center mt-5">
                   {errors.workTimeStart && (
-                    <div className="error">{errors.workTimeStart}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.workTimeStart}
+                    </Alert>
                   )}
                   {errors.workTimeEnd && (
-                    <div className="error">{errors.workTimeEnd}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.workTimeEnd}
+                    </Alert>
                   )}
                 </div>
               )}
 
               <form onSubmit={handleSubmit} className="input-form-container">
                 <div className="input-group">
-                  <label
-                    htmlFor="workTimeStart"
-                    className="label-for-form"
-                  >
+                  <label htmlFor="workTimeStart" className="label-for-form">
                     Work start time:
                   </label>
                   <div>
@@ -140,7 +142,7 @@ function AddScreenTimeTracker() {
                   </button>
                 </div>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (

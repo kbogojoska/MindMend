@@ -132,23 +132,11 @@ function Header(props) {
               style={{ left: `${leftPositionOfUserMenu}px` }}
             >
               <ul>
-                <li onClick={() => handleItemClick("login")}>
-                  <span>
-                    <FaChevronRight className="chevron-right unselectable" />
-                  </span>
-                  <span className="menu-content unselectable">Log in</span>
-                </li>
                 <li onClick={() => handleItemClick("logout")}>
                   <span>
                     <FaChevronRight className="chevron-right unselectable" />
                   </span>
                   <span className="menu-content unselectable">Log out</span>
-                </li>
-                <li onClick={() => handleItemClick("signin")}>
-                  <span>
-                    <FaChevronRight className="chevron-right unselectable" />
-                  </span>
-                  <span className="menu-content unselectable">Sign in</span>
                 </li>
               </ul>
             </div>

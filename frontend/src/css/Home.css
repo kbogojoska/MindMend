@@ -71,3 +71,12 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.login-link {
+  background-color: #a2a2de;
+  transition: background-color 0.3s ease;
+}
+
+.login-link:hover {
+  background-color: #eeb2b2;
+}

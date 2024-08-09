@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/HydroTracker/HydroTracker.css";
 
 function EditHydroTracker() {
@@ -85,12 +85,6 @@ function EditHydroTracker() {
     }));
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {loading ? (
@@ -110,7 +104,7 @@ function EditHydroTracker() {
               <CircularProgress />
             </div>
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -119,15 +113,22 @@ function EditHydroTracker() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               {(errors.numGlassesOfWater || errors.personalGoal) && (
-                <div className="d-flex justify-content-center align-items-center error-container">
+                <div className="flex flex-col items-center mt-5">
                   {errors.numGlassesOfWater && (
-                    <div className="p-2 error">{errors.numGlassesOfWater}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.numGlassesOfWater}
+                    </Alert>
                   )}
                   {errors.personalGoal && (
-                    <div className="p-2 error">{errors.personalGoal}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.personalGoal}
+                    </Alert>
                   )}
                 </div>
               )}
@@ -172,7 +173,7 @@ function EditHydroTracker() {
                   </button>
                 </div>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (

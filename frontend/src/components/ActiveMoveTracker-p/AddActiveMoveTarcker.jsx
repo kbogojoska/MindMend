@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/ActiveMoveTracker/ActiveMoveTracker.css";
 
 function AddActiveMoveTracker() {
@@ -31,12 +31,16 @@ function AddActiveMoveTracker() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8080/api/activemove-tracker/add", formData);
+      await axios.post(
+        "http://localhost:8080/api/activemove-tracker/add",
+        formData
+      );
       navigate("/activemove-tracker");
     } catch (error) {
       setErrors((prevState) => ({
         ...prevState,
-        connectionErrorAdd: "There was an error creating the active move tracker",
+        connectionErrorAdd:
+          "There was an error creating the active move tracker",
       }));
     } finally {
       setLoading(false);
@@ -55,12 +59,6 @@ function AddActiveMoveTracker() {
     }));
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {!errors.connectionErrorAdd ? (
@@ -74,7 +72,7 @@ function AddActiveMoveTracker() {
           {loading ? (
             <CircularProgress />
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -83,11 +81,18 @@ function AddActiveMoveTracker() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               {errors.dailySteps && (
-                <div className="d-flex justify-content-center align-items-center error-container">
-                  <div className="p-2 error">{errors.dailySteps}</div>
+                <div className="flex flex-col items-center mt-5">
+                  {errors.dailySteps && (
+                    <Alert severity="error" className="mb-2">
+                      {errors.dailySteps}
+                    </Alert>
+                  )}
                 </div>
               )}
               <form onSubmit={handleSubmit} className="input-form-container">
@@ -113,7 +118,7 @@ function AddActiveMoveTracker() {
                   </button>
                 </div>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (

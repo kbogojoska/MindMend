@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin({"chrome-extension://migfoencdaebpjdhkjodepnekmapmjlb", "http://localhost:3000"})
+@CrossOrigin({"chrome-extension://ehijlmogfgehaejkfiobfloafoopecgp", "http://localhost:3000"})
 @RequestMapping("/api/screen-tracker")
 public class ScreenTrackerController {
     private final ScreenTimeTrackerService screenTimeTrackerService;

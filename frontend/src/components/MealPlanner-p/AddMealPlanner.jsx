@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/MealPlanner/MealPlanner.css";
 
 function AddMealPlanner() {
@@ -55,12 +55,6 @@ function AddMealPlanner() {
     }));
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {!errors.connectionErrorAdd ? (
@@ -74,7 +68,7 @@ function AddMealPlanner() {
           {loading ? (
             <CircularProgress />
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -83,11 +77,18 @@ function AddMealPlanner() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               {errors.recipes && (
-                <div className="d-flex justify-content-center align-items-center error-container">
-                  <div className="p-2 error">{errors.recipes}</div>
+                <div className="flex flex-col items-center mt-5">
+                  {errors.recipes && (
+                    <Alert severity="error" className="mb-2">
+                      {errors.recipes}
+                    </Alert>
+                  )}
                 </div>
               )}
               <form onSubmit={handleSubmit} className="input-form-container">
@@ -113,7 +114,7 @@ function AddMealPlanner() {
                   </button>
                 </div>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (

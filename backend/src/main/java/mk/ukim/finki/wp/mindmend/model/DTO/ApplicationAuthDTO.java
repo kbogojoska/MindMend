@@ -3,8 +3,7 @@ package mk.ukim.finki.wp.mindmend.model.DTO;
 import lombok.Data;
 
 @Data
-public class ApplicationUserDTO {
+public class ApplicationAuthDTO {
     private String username;
-    private String email;
     private String password;
 }
