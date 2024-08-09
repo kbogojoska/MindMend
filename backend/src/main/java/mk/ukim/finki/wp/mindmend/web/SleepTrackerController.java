@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin({"chrome-extension://iofmjaeciopfhemggjcafhdbhnebdnmo", "http://localhost:3000"})
+@CrossOrigin({"chrome-extension://ehijlmogfgehaejkfiobfloafoopecgp", "http://localhost:3000"})
 @RequestMapping("/api/sleep-tracker")
 public class SleepTrackerController {
     private final SleepTrackerService sleepTrackerService;

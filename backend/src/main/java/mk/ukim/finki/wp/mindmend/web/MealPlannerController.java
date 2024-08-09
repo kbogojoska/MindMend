@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin({"chrome-extension://migfoencdaebpjdhkjodepnekmapmjlb", "http://localhost:3000"})
+@CrossOrigin({"chrome-extension://ehijlmogfgehaejkfiobfloafoopecgp", "http://localhost:3000"})
 @RequestMapping("/api/meal-planner")
 public class MealPlannerController {
     private final MealPlannerServiceImpl mealPlannerService;

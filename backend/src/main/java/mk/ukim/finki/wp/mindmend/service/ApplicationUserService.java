@@ -11,4 +11,5 @@ public interface ApplicationUserService {
     ApplicationUser create(String username, String password, String email);
     ApplicationUser edit(Long Id, String username, String password, String email);
     ApplicationUser delete(Long Id);
+    ApplicationUser login(String email, String password);
 }

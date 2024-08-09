@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/MindfulMoment/MindfulMoment.css";
 
 function EditMindfulMoment() {
@@ -18,7 +18,7 @@ function EditMindfulMoment() {
     startOfWorkShift: "",
     endOfWorkShift: "",
     stressLevel: "",
-    stressLevelFromZeroToFour: ""
+    stressLevelFromZeroToFour: "",
   });
 
   const { id } = useParams();
@@ -53,7 +53,8 @@ function EditMindfulMoment() {
       !formData.startOfWorkShift ||
       !formData.endOfWorkShift ||
       !formData.stressLevel ||
-      (parseInt(formData.stressLevel) < 0 || parseInt(formData.stressLevel) > 4)
+      parseInt(formData.stressLevel) < 0 ||
+      parseInt(formData.stressLevel) > 4
     ) {
       setErrors({
         startOfWorkShift: !formData.startOfWorkShift
@@ -63,7 +64,11 @@ function EditMindfulMoment() {
           ? "End of shift time is required!"
           : "",
         stressLevel: !formData.stressLevel ? "Stress level is required!" : "",
-        stressLevelFromZeroToFour: parseInt(formData.stressLevel) < 0 || parseInt(formData.stressLevel) > 4 ? "Stress level needs to be from 0 to 4!" : ""
+        stressLevelFromZeroToFour:
+          parseInt(formData.stressLevel) < 0 ||
+          parseInt(formData.stressLevel) > 4
+            ? "Stress level needs to be from 0 to 4!"
+            : "",
       });
       return;
     }
@@ -98,12 +103,6 @@ function EditMindfulMoment() {
     }));
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {loading ? (
@@ -123,7 +122,7 @@ function EditMindfulMoment() {
               <CircularProgress />
             </div>
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -132,24 +131,35 @@ function EditMindfulMoment() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               {(errors.startOfWorkShift ||
                 errors.endOfWorkShift ||
                 errors.stressLevel ||
                 errors.stressLevelFromZeroToFour) && (
-                <div className="d-flex justify-content-center align-items-center error-container">
+                <div className="flex flex-col items-center mt-5">
                   {errors.startOfWorkShift && (
-                    <div className="p-2 error">{errors.startOfWorkShift}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.startOfWorkShift}
+                    </Alert>
                   )}
                   {errors.endOfWorkShift && (
-                    <div className="p-2 error">{errors.endOfWorkShift}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.endOfWorkShift}
+                    </Alert>
                   )}
                   {errors.stressLevel && (
-                    <div className="p-2 error">{errors.stressLevel}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.stressLevel}
+                    </Alert>
                   )}
                   {errors.stressLevelFromZeroToFour && (
-                    <div className="p-2 error">{errors.stressLevelFromZeroToFour}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.stressLevelFromZeroToFour}
+                    </Alert>
                   )}
                 </div>
               )}
@@ -208,7 +218,7 @@ function EditMindfulMoment() {
                   </button>
                 </div>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (

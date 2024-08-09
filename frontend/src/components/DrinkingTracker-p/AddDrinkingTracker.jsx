@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/DrinkingTracker/DrinkingTracker.css";
 
 function AddDrinkingTracker() {
@@ -27,15 +27,22 @@ function AddDrinkingTracker() {
     if (!formData.numOfDrinks || !formData.maxDrinks) {
       setErrors({
         ...errors,
-        numOfDrinks: !formData.numOfDrinks ? "Number of drinks is required!" : "",
-        maxDrinks: !formData.maxDrinks ? "Setting a maximum drinks is required!" : "",
+        numOfDrinks: !formData.numOfDrinks
+          ? "Number of drinks is required!"
+          : "",
+        maxDrinks: !formData.maxDrinks
+          ? "Setting a maximum drinks is required!"
+          : "",
       });
       return;
     }
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8080/api/drinking-tracker/add", formData);
+      await axios.post(
+        "http://localhost:8080/api/drinking-tracker/add",
+        formData
+      );
       navigate("/drinking-tracker");
     } catch (error) {
       setErrors((prevState) => ({
@@ -59,12 +66,6 @@ function AddDrinkingTracker() {
     }));
   };
 
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
-
   return (
     <>
       {!errors.connectionErrorAdd ? (
@@ -78,7 +79,7 @@ function AddDrinkingTracker() {
           {loading ? (
             <CircularProgress />
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -87,15 +88,22 @@ function AddDrinkingTracker() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               {(errors.numOfDrinks || errors.maxDrinks) && (
-                <div className="d-flex justify-content-center align-items-center error-container">
+                <div className="flex flex-col items-center mt-5">
                   {errors.numOfDrinks && (
-                    <div className="p-2 error">{errors.numOfDrinks}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.numOfDrinks}
+                    </Alert>
                   )}
                   {errors.maxDrinks && (
-                    <div className="p-2 error">{errors.maxDrinks}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.maxDrinks}
+                    </Alert>
                   )}
                 </div>
               )}
@@ -140,7 +148,7 @@ function AddDrinkingTracker() {
                   </button>
                 </div>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (

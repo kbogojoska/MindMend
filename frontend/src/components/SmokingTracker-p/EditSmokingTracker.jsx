@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import "../../css/SmokingTracker/SmokingTracker.css";
 
 function EditSmokingTracker() {
   const [formData, setFormData] = useState({
     cigarettesPerDay: "",
-    maxCigarettesPerDay:"",
+    maxCigarettesPerDay: "",
   });
   const [errors, setErrors] = useState({
     cigarettesPerDay: "",
@@ -32,7 +32,8 @@ function EditSmokingTracker() {
       } catch (error) {
         setErrors((prevState) => ({
           ...prevState,
-          connectionErrorFindById: "There was an error accessing the smoking tracker",
+          connectionErrorFindById:
+            "There was an error accessing the smoking tracker",
         }));
         setLoading(false);
       }
@@ -65,7 +66,8 @@ function EditSmokingTracker() {
     } catch (error) {
       setErrors((prevState) => ({
         ...prevState,
-        connectionErrorEditById: "There was an error editing the smoking tracker",
+        connectionErrorEditById:
+          "There was an error editing the smoking tracker",
       }));
     } finally {
       setLoading(false);
@@ -83,12 +85,6 @@ function EditSmokingTracker() {
       [name]: "",
     }));
   };
-
-  const StyledGrid = styled(Grid)(({ theme }) => ({
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-  }));
 
   return (
     <>
@@ -109,7 +105,7 @@ function EditSmokingTracker() {
               <CircularProgress />
             </div>
           ) : (
-            <StyledGrid
+            <Grid
               item
               xs={10}
               sm={10}
@@ -118,15 +114,22 @@ function EditSmokingTracker() {
               sx={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: "20px",
+                padding: "16px",
+                backgroundColor: "white",
+                margin: "16px",
               }}
             >
               {(errors.cigarettesPerDay || errors.maxCigarettesPerDay) && (
-                <div className="d-flex justify-content-center align-items-center error-container">
+                <div className="flex flex-col items-center mt-5">
                   {errors.cigarettesPerDay && (
-                    <div className="p-2 error">{errors.cigarettesPerDay}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.cigarettesPerDay}
+                    </Alert>
                   )}
                   {errors.maxCigarettesPerDay && (
-                    <div className="p-2 error">{errors.maxCigarettesPerDay}</div>
+                    <Alert severity="error" className="mb-2">
+                      {errors.maxCigarettesPerDay}
+                    </Alert>
                   )}
                 </div>
               )}
@@ -149,7 +152,10 @@ function EditSmokingTracker() {
                   </div>
                 </div>
                 <div className="input-group">
-                  <label htmlFor="maxCigarettesPerDay" className="label-for-form">
+                  <label
+                    htmlFor="maxCigarettesPerDay"
+                    className="label-for-form"
+                  >
                     Set a smoking limit per day:
                   </label>
                   <div>
@@ -171,7 +177,7 @@ function EditSmokingTracker() {
                   </button>
                 </div>
               </form>
-            </StyledGrid>
+            </Grid>
           )}
         </Grid>
       ) : (
