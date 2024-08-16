@@ -1,7 +1,23 @@
-import React from 'react';
-import '../../css/SocialSphere/SocialSphere.css'
+import React, { useEffect, useState } from 'react';
+import '../../css/ActiveMoveTracker/ActiveMoveTracker.css';
 
-function SocialSphereItem(props) {
+function ActiveMoveTrackerItem(props) {
+  const [reminders, setReminders] = useState([]);
+
+  useEffect(() => {
+    const username = localStorage.getItem("loggedInUser");
+    if (username) {
+      const userRemindersKey = `${username}_reminders`;
+      const storedReminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
+      setReminders(storedReminders);
+    }
+  }, []);
+
+  const getReminderForDailySteps = (dailySteps) => {
+    const reminder = reminders.find(r => r.message.includes(`${dailySteps} steps`));
+    return reminder ? reminder.time : null;
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -14,7 +30,12 @@ function SocialSphereItem(props) {
             <ul className="list-group activity-list">
               {props.activitySuggestions.map((element, index) => (
                 <li className="list-group-item" key={index}>
-                    <p className='mb-0'>Daily Steps Goal: {element.dailySteps}</p>
+                  <p className='mb-0'>Daily Steps Goal: {element.dailySteps}</p>
+                  <p className='mb-0'>
+                    Reminder: {getReminderForDailySteps(element.dailySteps) 
+                      ? `Reminder set for ${new Date(getReminderForDailySteps(element.dailySteps)).toLocaleString()}` 
+                      : 'No reminder set'}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -22,7 +43,7 @@ function SocialSphereItem(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default SocialSphereItem
+export default ActiveMoveTrackerItem;

@@ -49,6 +49,9 @@ function LogIn({ setLogged, setIsAdmin }) {
       } else if (response.data.role === "ROLE_ADMIN") {
         setIsAdmin(true);
       }
+
+      const username = response.data.username; 
+      localStorage.setItem("loggedInUser", username);
       setLogged(true);
 
       navigate("/");

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+        .reminder-message {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .close-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .close-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="reminder-message" id="reminder-message">
+        <!-- Reminder message will be inserted here dynamically -->
+    </div>
+    <button class="close-button" onclick="closePopup()">Close</button>
+
+    <script>
+        // Function to close the popup
+        function closePopup() {
+            window.close();
+        }
+
+        // Code to handle dynamic insertion of reminder message
+        const params = new URLSearchParams(window.location.search);
+        const message = params.get('message');
+        const reminderMessage = document.getElementById('reminder-message');
+        
+        if (message) {
+            reminderMessage.textContent = message;
+        } else {
+            reminderMessage.textContent = 'No message provided.';
+        }
+    </script>
+</body>
+</html>
