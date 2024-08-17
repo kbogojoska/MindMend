@@ -3,6 +3,8 @@ package mk.ukim.finki.wp.mindmend.model.habits;
 import jakarta.persistence.*;
 import lombok.Data;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalTime;
 
@@ -18,6 +20,8 @@ public class ScreenTimeTracker {
     private LocalTime workTimeEnd;
 
     @OneToOne
+    @JoinColumn(name = "application_user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ApplicationUser applicationUser;
 
     public void calculateBreakTime() {
@@ -31,6 +35,8 @@ public class ScreenTimeTracker {
 
     public ScreenTimeTracker(ApplicationUser user) {
         this.applicationUser = user;
+        this.workTimeStart=LocalTime.of(9,0,0);
+        this.workTimeEnd=LocalTime.of(17,0,0);
         calculateBreakTime();
     }
 

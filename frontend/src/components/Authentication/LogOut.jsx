@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function LogOut({ isLogged, setLogged }) {
+function LogOut({ isLogged, setLogged, user, setUser }) {
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({
     connectionError: "",
@@ -30,6 +30,7 @@ function LogOut({ isLogged, setLogged }) {
           }));
         }
         setLogged(false);
+        setUser({userId: "", username: ""});
 
         navigate("/login");
       } catch (error) {
@@ -43,7 +44,7 @@ function LogOut({ isLogged, setLogged }) {
       }
     };
     logoutUser();
-  }, [navigate, setLogged, isLogged]);
+  }, [navigate, setLogged, isLogged, setUser]);
 
   return (
     <>

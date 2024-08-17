@@ -7,5 +7,6 @@ import java.util.List;
 
 @Data
 public class SocialSphereDTO {
+    private Long userId;
     private List<SocialActivity> socialActivitySuggestions;
 }

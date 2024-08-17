@@ -1,13 +1,11 @@
 package mk.ukim.finki.wp.mindmend.model.habits;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalTime;
 
@@ -22,6 +20,8 @@ public class SleepTracker {
     private LocalTime wakeUpTime;
     private LocalTime bedTime;
     @OneToOne
+    @JoinColumn(name = "application_user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ApplicationUser applicationUser;
 
     public SleepTracker() {
@@ -39,6 +39,12 @@ public class SleepTracker {
         this.recommendedSleepTime = recommendedSleepTime;
         this.wakeUpTime = wakeUpTime;
         this.bedTime = bedTime;
+        this.applicationUser = applicationUser;
+    }
+    public SleepTracker(ApplicationUser applicationUser) {
+        this.recommendedSleepTime = 8;
+        this.wakeUpTime = LocalTime.of(6,0,0);
+        this.bedTime = LocalTime.of(22,0,0);
         this.applicationUser = applicationUser;
     }
 }

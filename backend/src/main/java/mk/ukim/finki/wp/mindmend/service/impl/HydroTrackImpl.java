@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackAlreadyExistsException;
 import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.HydroTrackRepository;
@@ -14,12 +15,9 @@ import java.util.List;
 public class HydroTrackImpl implements HydroTrackService {
 
     private final HydroTrackRepository hydroTrackRepository;
-    private final ApplicationUserService applicationUserService;
 
-    public HydroTrackImpl(HydroTrackRepository hydroTrackRepository,
-                          ApplicationUserService applicationUserService) {
+    public HydroTrackImpl(HydroTrackRepository hydroTrackRepository) {
         this.hydroTrackRepository = hydroTrackRepository;
-        this.applicationUserService = applicationUserService;
     }
 
     @Override
@@ -33,14 +31,14 @@ public class HydroTrackImpl implements HydroTrackService {
     }
 
     @Override
-    public HydroTrack create(Integer numGlassesOfWater, Integer personalGoal) {
-        // for testing method can run only once because of the one to one relation
-        // will be logged user later
-        ApplicationUser user = applicationUserService.create("pip", "pip.m.com", "123");
-        //
-        return personalGoal == null ?
-                hydroTrackRepository.save(new HydroTrack(numGlassesOfWater, user)) :
-                hydroTrackRepository.save(new HydroTrack(numGlassesOfWater, personalGoal, user));
+    public HydroTrack create(Integer numGlassesOfWater, Integer personalGoal, ApplicationUser user) {
+        if (hydroTrackRepository.getHydroTrackByApplicationUser(user).isPresent()) {
+            throw new HydroTrackAlreadyExistsException();
+        }
+        return (personalGoal == null && numGlassesOfWater == null) ?
+                hydroTrackRepository.save(new HydroTrack(user)) :
+                (personalGoal == null ? hydroTrackRepository.save(new HydroTrack(numGlassesOfWater, user)) :
+                        hydroTrackRepository.save(new HydroTrack(numGlassesOfWater, personalGoal, user)));
     }
 
     @Override
@@ -53,9 +51,15 @@ public class HydroTrackImpl implements HydroTrackService {
     }
 
     @Override
-    public HydroTrack delete(Long Id) {
+    public HydroTrack delete(Long Id, ApplicationUser applicationUser) {
         HydroTrack hydroTrack = findById(Id);
         hydroTrackRepository.delete(hydroTrack);
+        create(null, null, applicationUser);
         return hydroTrack;
+    }
+
+    @Override
+    public HydroTrack findByUser(ApplicationUser user) {
+        return hydroTrackRepository.getHydroTrackByApplicationUser(user).orElseThrow(HydroTrackNotFoundException::new);
     }
 }

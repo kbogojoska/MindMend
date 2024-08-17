@@ -10,6 +10,9 @@ public class ScreenTimeMapper {
     public static ScreenTimeDTO MapToViewModel(ScreenTimeTracker screenTracker)
     {
         return new ScreenTimeDTO(
+                screenTracker.getApplicationUser().getId(),
+                screenTracker.getWorkTimeStart(),
+                screenTracker.getWorkTimeEnd(),
                 screenTracker.getNextBreakTime(),
                 screenTracker.getEndOfBreakTime()
         );

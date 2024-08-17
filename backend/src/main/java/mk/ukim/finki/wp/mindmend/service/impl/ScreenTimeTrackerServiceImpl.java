@@ -4,6 +4,10 @@ import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.DTO.ScreenTimeDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.ScreenTimeMapper;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackAlreadyExistsException;
+import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackNotFoundException;
+import mk.ukim.finki.wp.mindmend.model.exceptions.ScreenTrackerAlreadyExistsException;
+import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 import mk.ukim.finki.wp.mindmend.model.habits.ScreenTimeTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.ScreenTimeTrackerNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.ScreenTimeTrackerRepository;
@@ -19,29 +23,24 @@ import java.util.List;
 public class ScreenTimeTrackerServiceImpl implements ScreenTimeTrackerService {
 
     private final ScreenTimeTrackerRepository screenRepository;
-    private final ApplicationUserService applicationUserService;
-
     @Override
     public List<ScreenTimeTracker> findAllScreenTimeTrackers() {
-//        return ScreenTimeMapper.MapToListViewModel(screenRepository.findAll());
         return screenRepository.findAll();
     }
 
     @Override
     public ScreenTimeTracker findById(Long id) {
-//        return ScreenTimeMapper.MapToViewModel(screenRepository.findById(id).orElseThrow(ScreenTimeTrackerNotFoundException::new));
         return screenRepository.findById(id).orElseThrow(ScreenTimeTrackerNotFoundException::new);
     }
 
     @Override
-    public ScreenTimeTracker create(LocalTime workTimeStart, LocalTime workTimeEnd) {
-        ApplicationUser user = applicationUserService.create("new", "741", "new@gmail.com");
-        if(workTimeStart==null && workTimeEnd==null)
-        {
-            return screenRepository.save(new ScreenTimeTracker(user));
+    public ScreenTimeTracker create(LocalTime workTimeStart, LocalTime workTimeEnd, ApplicationUser user) {
+        if (screenRepository.getScreenTimeTrackerByApplicationUser(user).isPresent()) {
+            throw new ScreenTrackerAlreadyExistsException();
         }
-        else
-            return screenRepository.save(new ScreenTimeTracker(user,workTimeStart,workTimeEnd));
+        return (workTimeStart == null || workTimeEnd == null) ?
+                screenRepository.save(new ScreenTimeTracker(user)) :
+                screenRepository.save(new ScreenTimeTracker(user, workTimeStart, workTimeEnd));
     }
 
     @Override
@@ -55,11 +54,18 @@ public class ScreenTimeTrackerServiceImpl implements ScreenTimeTrackerService {
     }
 
     @Override
-    public ScreenTimeTracker delete(Long id) {
+    public ScreenTimeTracker delete(Long id, ApplicationUser applicationUser) {
         ScreenTimeTracker screenTimeTracker=screenRepository.findById(id).orElseThrow(ScreenTimeTrackerNotFoundException::new);
         screenRepository.delete(screenTimeTracker);
+        create(null, null, applicationUser);
         return screenTimeTracker;
     }
+
+    @Override
+    public ScreenTimeTracker findByUser(ApplicationUser user) {
+        return screenRepository.getScreenTimeTrackerByApplicationUser(user).orElseThrow(ScreenTimeTrackerNotFoundException::new);
+    }
+
 
 //    @Override
 //    @Scheduled(fixedRate = 60000) //pravi proverka sekoja minuta dali e priblizno do posakuvanata pauza

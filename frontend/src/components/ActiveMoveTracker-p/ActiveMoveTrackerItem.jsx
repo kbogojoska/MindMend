@@ -1,7 +1,6 @@
 import React from 'react';
-import '../../css/SocialSphere/SocialSphere.css'
 
-function SocialSphereItem(props) {
+function ActiveMoveTrackerItem(props) {
   return (
     <div className="container">
       <div className="row">
@@ -12,11 +11,11 @@ function SocialSphereItem(props) {
               <h5 className="text-truncate">{props.user.username}</h5>
             </div>
             <ul className="list-group activity-list">
-              {props.activitySuggestions.map((element, index) => (
-                <li className="list-group-item" key={index}>
-                    <p className='mb-0'>Daily Steps Goal: {element.dailySteps}</p>
+              {/* {props.activitySuggestions.map((element, index) => ( */}
+                <li className="list-group-item">
+                    <p className='mb-0'>Daily Steps Goal: {props.dailySteps}</p>
                 </li>
-              ))}
+              {/* ))} */}
             </ul>
           </div>
         </div>
@@ -25,4 +24,4 @@ function SocialSphereItem(props) {
   )
 }
 
-export default SocialSphereItem
+export default ActiveMoveTrackerItem

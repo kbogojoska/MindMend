@@ -4,34 +4,58 @@ import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.exceptions.UserDoesNotExistException;
 import mk.ukim.finki.wp.mindmend.model.exceptions.UserNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.ApplicationUserRepository;
-import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
+import mk.ukim.finki.wp.mindmend.service.*;
 import mk.ukim.finki.wp.mindmend.model.exceptions.UsernameAlreadyExistsException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ApplicationUserServiceImpl implements ApplicationUserService, UserDetailsService {
     private final ApplicationUserRepository applicationUserRepository;
+    private final HydroTrackService hydroTrackService;
+    private final ActiveMoveTrackerService activeMoveTrackerService;
+    private final SmokingTrackerService smokingTrackerService;
+    private final DrinkingTrackerService drinkingTrackerService;
+    private final MealPlannerService mealPlannerService;
+    private final ScreenTimeTrackerService screenTimeTrackerService;
+    private final SleepTrackerService sleepTrackerService;
+    private final MindfulMomentService mindfulMomentService;
+    private final SocialSphereService socialSphereService;
     private final PasswordEncoder passwordEncoder;
 
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationUserServiceImpl.class);
 
-    public ApplicationUserServiceImpl(ApplicationUserRepository applicationUserRepository, PasswordEncoder passwordEncoder) {
+    public ApplicationUserServiceImpl(ApplicationUserRepository applicationUserRepository,
+                                      HydroTrackService hydroTrackService,
+                                      ActiveMoveTrackerService activeMoveTrackerService,
+                                      SmokingTrackerService smokingTrackerService,
+                                      DrinkingTrackerService drinkingTrackerService,
+                                      MealPlannerService mealPlannerService,
+                                      ScreenTimeTrackerService screenTimeTrackerService,
+                                      SleepTrackerService sleepTrackerService,
+                                      SocialSphereService socialSphereService,
+                                      MindfulMomentService mindfulMomentService,
+                                      PasswordEncoder passwordEncoder) {
         this.applicationUserRepository = applicationUserRepository;
+        this.hydroTrackService = hydroTrackService;
+        this.activeMoveTrackerService = activeMoveTrackerService;
+        this.smokingTrackerService = smokingTrackerService;
+        this.drinkingTrackerService = drinkingTrackerService;
+        this.mealPlannerService = mealPlannerService;
+        this.screenTimeTrackerService = screenTimeTrackerService;
+        this.sleepTrackerService = sleepTrackerService;
+        this.mindfulMomentService = mindfulMomentService;
+        this.socialSphereService = socialSphereService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -48,20 +72,24 @@ public class ApplicationUserServiceImpl implements ApplicationUserService, UserD
 
     @Override
     public ApplicationUser create(String username, String password, String email) {
-        if (!applicationUserRepository.findAllByEmail(email).isEmpty()) {
+        if (applicationUserRepository.findByUsername(username).isPresent()) {
             throw new UsernameAlreadyExistsException();
         }
         String encryptedPassword = passwordEncoder.encode(password);
         ApplicationUser user = new ApplicationUser(username, encryptedPassword, email);
-//        User userForUserRepo = new User(username, encryptedPassword, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-//        userRepository.save(user);
-        applicationUserRepository.save(user);
-        try {
-            return applicationUserRepository.save(user);
-        } catch (DataIntegrityViolationException e) {
-            throw new UsernameAlreadyExistsException();
-        }
 
+        applicationUserRepository.save(user);
+
+        hydroTrackService.create(null, null, user);
+        activeMoveTrackerService.create(null, user);
+        smokingTrackerService.create(null, null, user);
+        drinkingTrackerService.create(null, null, user);
+        mindfulMomentService.create(null, null, null, user);
+        mealPlannerService.create(user);
+        screenTimeTrackerService.create(null, null, user);
+        sleepTrackerService.create(null, null, null, user);
+        socialSphereService.create(user);
+        return user;
     }
 
     @Override
@@ -101,6 +129,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService, UserD
             logger.warn("Password mismatch for user: {}", username);
             return null;
         }
+    }
+
+    @Override
+    public ApplicationUser findByUsername(String username) {
+        return applicationUserRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
     @Override

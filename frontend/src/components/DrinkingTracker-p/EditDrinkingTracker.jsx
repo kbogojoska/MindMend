@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import "../../css/DrinkingTracker/DrinkingTracker.css";
 
-function EditDrinkTracker() {
+function EditDrinkTracker({ isAdmin, user, setUser }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -30,7 +30,10 @@ function EditDrinkTracker() {
       try {
         const result = await axios.get(
           `http://localhost:8080/api/drinking-tracker/${id}`
-        );
+        );      
+        if(user != null && user.username !== result.data.username && !isAdmin) {
+          navigate("/drinking-tracker");
+        }
         setFormData({
           numOfDrinks: result.data.numOfDrinks,
           maxDrinks: result.data.maxDrinks,
@@ -46,7 +49,7 @@ function EditDrinkTracker() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

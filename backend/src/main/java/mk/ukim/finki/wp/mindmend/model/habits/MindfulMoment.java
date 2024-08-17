@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalTime;
 
@@ -22,6 +24,8 @@ public class MindfulMoment {
     private Double stressLevel;
     private static Integer stressLevelLimit = 4;
     @OneToOne
+    @JoinColumn(name = "application_user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ApplicationUser applicationUser;
 
     public MindfulMoment(ApplicationUser applicationUser, LocalTime startOfWorkShift, LocalTime endOfWorkShift, Double stressLevel) {
@@ -29,5 +33,12 @@ public class MindfulMoment {
         this.startOfWorkShift = startOfWorkShift;
         this.endOfWorkShift = endOfWorkShift;
         this.stressLevel = stressLevel;
+    }
+
+    public MindfulMoment(ApplicationUser applicationUser) {
+        this.applicationUser = applicationUser;
+        this.startOfWorkShift = LocalTime.of(9,0,0);
+        this.endOfWorkShift = LocalTime.of(17,0,0);
+        this.stressLevel = 0.0;
     }
 }

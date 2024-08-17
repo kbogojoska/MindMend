@@ -10,6 +10,7 @@ public class DrinkingMapper {
     public static DrinkingTrackerDTO MapToViewModel(DrinkingTracker drinkingTracker)
     {
         return new DrinkingTrackerDTO(
+                drinkingTracker.getApplicationUser().getId(),
                 drinkingTracker.getNumOfDrinks(),
                 drinkingTracker.getMaxDrinks()
         );

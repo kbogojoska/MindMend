@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.mindmend.service;
 
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.DTO.MealPlannerDTO;
 import mk.ukim.finki.wp.mindmend.model.habits.MealPlanner;
 
@@ -10,9 +11,10 @@ public interface MealPlannerService {
 
     MealPlanner findById(Long id);
 
-    MealPlanner create();
+    MealPlanner create(ApplicationUser user);
 
     MealPlanner edit(Long id, MealPlannerDTO mealPlannerDTO);
 
-    MealPlanner delete(Long id);
+    MealPlanner delete(Long id, ApplicationUser applicationUser);
+    MealPlanner findByUser(ApplicationUser user);
 }

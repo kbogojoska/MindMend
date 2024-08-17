@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.DTO.DrinkingTrackerDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.DrinkingMapper;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackAlreadyExistsException;
+import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackNotFoundException;
 import mk.ukim.finki.wp.mindmend.model.habits.DrinkingTracker;
 import mk.ukim.finki.wp.mindmend.model.exceptions.DrinkingTrackerNotFoundException;
+import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 import mk.ukim.finki.wp.mindmend.repository.DrinkingTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
 import mk.ukim.finki.wp.mindmend.service.DrinkingTrackerService;
@@ -17,24 +20,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DrinkingTrackerImpl implements DrinkingTrackerService {
     private final DrinkingTrackerRepository drinkingRepository;
-    private final ApplicationUserService userService;
 
     @Override
     public List<DrinkingTracker> findAllDrinkingTrackers() {
-//        return DrinkingMapper.MapToListViewModel(drinkingRepository.findAll());
         return drinkingRepository.findAll();
     }
 
     @Override
     public DrinkingTracker findById(Long id) {
-//        return DrinkingMapper.MapToViewModel(drinkingRepository.findById(id).orElseThrow(DrinkingTrackerNotFoundException::new));
         return drinkingRepository.findById(id).orElseThrow(DrinkingTrackerNotFoundException::new);
     }
 
     @Override
-    public DrinkingTracker create(Integer numOfDrinks, Integer maxDrinks) {
-        ApplicationUser user = this.userService.create("drink", "d", "lkl");
-        return drinkingRepository.save(new DrinkingTracker(numOfDrinks,maxDrinks, user));
+    public DrinkingTracker create(Integer numOfDrinks, Integer maxDrinks, ApplicationUser user) {
+        if (drinkingRepository.getDrinkingTrackerByApplicationUser(user).isPresent()) {
+            throw new DrinkingTrackerNotFoundException();
+        }
+        return (numOfDrinks == null && maxDrinks == null) ?
+                drinkingRepository.save(new DrinkingTracker(user)) :
+                drinkingRepository.save(new DrinkingTracker(numOfDrinks, maxDrinks, user));
     }
 
     @Override
@@ -47,9 +51,15 @@ public class DrinkingTrackerImpl implements DrinkingTrackerService {
     }
 
     @Override
-    public DrinkingTracker delete(Long id) {
+    public DrinkingTracker delete(Long id, ApplicationUser applicationUser) {
         DrinkingTracker drinkingTracker=drinkingRepository.findById(id).orElseThrow(DrinkingTrackerNotFoundException::new);
         drinkingRepository.delete(drinkingTracker);
+        create(null, null, applicationUser);
         return drinkingTracker;
+    }
+
+    @Override
+    public DrinkingTracker findByUser(ApplicationUser user) {
+        return drinkingRepository.getDrinkingTrackerByApplicationUser(user).orElseThrow(DrinkingTrackerNotFoundException::new);
     }
 }
