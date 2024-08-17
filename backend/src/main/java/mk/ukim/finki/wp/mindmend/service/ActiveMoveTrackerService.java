@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.mindmend.service;
 
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.DTO.ActiveMoveTrackerDTO;
 import mk.ukim.finki.wp.mindmend.model.habits.ActiveMoveTracker;
 
@@ -10,10 +11,11 @@ public interface ActiveMoveTrackerService {
 
     ActiveMoveTracker findById(Long id);
 
-    ActiveMoveTracker create(Integer dailySteps);
+    ActiveMoveTracker create(Integer dailySteps, ApplicationUser user);
 
     ActiveMoveTracker edit(Long id, Integer dailySteps);
 
-    ActiveMoveTracker delete(Long id);
+    ActiveMoveTracker delete(Long id, ApplicationUser applicationUser);
+    ActiveMoveTracker findByUser(ApplicationUser user);
 
 }

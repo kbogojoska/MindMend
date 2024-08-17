@@ -3,9 +3,13 @@ package mk.ukim.finki.wp.mindmend.service.impl;
 import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.DTO.ActiveMoveTrackerDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.ActiveMoveMapper;
+import mk.ukim.finki.wp.mindmend.model.exceptions.ActiveMoveTrackerAlreadyExistsException;
+import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackAlreadyExistsException;
+import mk.ukim.finki.wp.mindmend.model.exceptions.HydroTrackNotFoundException;
 import mk.ukim.finki.wp.mindmend.model.habits.ActiveMoveTracker;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.exceptions.ActiveMoveTrackerNotFoundException;
+import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 import mk.ukim.finki.wp.mindmend.repository.ActiveMoveTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ActiveMoveTrackerService;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
@@ -17,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActiveMoveTrackerServiceImpl implements ActiveMoveTrackerService {
     private final ActiveMoveTrackerRepository activeMoveTrackerRepository;
-    private final ApplicationUserService applicationUserService;
 
     @Override
     public List<ActiveMoveTracker> findAllMoveTrackers() {
@@ -32,8 +35,10 @@ public class ActiveMoveTrackerServiceImpl implements ActiveMoveTrackerService {
     }
 
     @Override
-    public ActiveMoveTracker create(Integer dailySteps) {
-        ApplicationUser user=applicationUserService.create("new","147","new@gmail.com");
+    public ActiveMoveTracker create(Integer dailySteps, ApplicationUser user) {
+        if (activeMoveTrackerRepository.getActiveMoveTrackerByUser(user).isPresent()) {
+            throw new ActiveMoveTrackerAlreadyExistsException();
+        }
         if (dailySteps != null)
             return this.activeMoveTrackerRepository.save(new ActiveMoveTracker(user,dailySteps));
         return this.activeMoveTrackerRepository.save(new ActiveMoveTracker(user));
@@ -48,10 +53,16 @@ public class ActiveMoveTrackerServiceImpl implements ActiveMoveTrackerService {
     }
 
     @Override
-    public ActiveMoveTracker delete(Long id) {
+    public ActiveMoveTracker delete(Long id, ApplicationUser applicationUser) {
         ActiveMoveTracker tracker = activeMoveTrackerRepository.findById(id).
                 orElseThrow(ActiveMoveTrackerNotFoundException::new);
         this.activeMoveTrackerRepository.delete(tracker);
+        create(null, applicationUser);
         return tracker;
+    }
+
+    @Override
+    public ActiveMoveTracker findByUser(ApplicationUser user) {
+        return activeMoveTrackerRepository.getActiveMoveTrackerByUser(user).orElseThrow(ActiveMoveTrackerNotFoundException::new);
     }
 }

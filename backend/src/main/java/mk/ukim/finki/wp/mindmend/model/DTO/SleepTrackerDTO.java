@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalTime;
 @Data
 public class SleepTrackerDTO {
-//    private Long userId;
+    private Long userId;
     private Integer recommendedSleepTime;
     private LocalTime wakeUpTime;
     private LocalTime bedTime;

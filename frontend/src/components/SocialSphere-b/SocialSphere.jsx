@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import SocialSphereItem from "./SocialSphereItem";
-import { FaPlus, FaPenToSquare, FaTrash } from "react-icons/fa6";
+import { FaPlus, FaTrash } from "react-icons/fa6";
 import "../../css/BodyElementsFade.css";
 import "../../css/SocialSphere/SocialSphere.css";
 import { useNavigate } from "react-router-dom";
@@ -49,9 +49,9 @@ function SocialSphere() {
     navigate(`/social-sphere/add`);
   };
 
-  const handleEdit = (id) => {
-    navigate(`/social-sphere/edit/${id}`);
-  };
+  // const handleEdit = (id) => {
+  //   navigate(`/social-sphere/edit/${id}`);
+  // };
 
   const handleDelete = async (id, event) => {
     event.stopPropagation();
@@ -155,18 +155,18 @@ function SocialSphere() {
                   }}
                 >
                   <SocialSphereItem
-                    user={element.applicationUser}
-                    activitySuggestions={element.socialActivitySuggestions}
+                    user={element}
+                    activityOfTheDay={element.activityOfTheDay}
                   />
                   <div id="edit-delete-container">
-                    <div
+                    {/* <div
                       className="edit-delete-btn"
                       onClick={() => handleEdit(element.id)}
                     >
                       <span className="crud-button-text unselectable">
                         <FaPenToSquare size={18} className="unselectable" />
                       </span>
-                    </div>
+                    </div> */}
                     <div
                       className="edit-delete-btn"
                       onClick={(event) => handleDelete(element.id, event)}

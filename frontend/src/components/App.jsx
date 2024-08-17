@@ -9,6 +9,11 @@ function App() {
 
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  
+  const [user, setUser] = useState({
+    userId: "",
+    username: ""
+  });
 
   // make it a map so its easier
   const habitNames = [
@@ -33,6 +38,8 @@ function App() {
             setIsLogged={setIsUserAuthenticated}
             isAdmin={isAdmin}
             setIsAdmin={setIsAdmin}
+            user={user}
+            setUser={setUser}
           />
         </div>
         <Footer />

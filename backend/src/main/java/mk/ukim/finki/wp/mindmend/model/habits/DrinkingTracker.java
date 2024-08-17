@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -16,6 +18,8 @@ public class DrinkingTracker {
     private Long id;
     private Integer numOfDrinks;
     @OneToOne
+    @JoinColumn(name = "application_user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     ApplicationUser applicationUser;
 
     private Integer maxDrinks;
@@ -23,7 +27,7 @@ public class DrinkingTracker {
     public DrinkingTracker(ApplicationUser applicationUser) {
         this.applicationUser = applicationUser;
         this.numOfDrinks=0;
-        this.maxDrinks=0;
+        this.maxDrinks=3;
     }
 
     public DrinkingTracker(Integer numOfDrinks, Integer maxDrinks, ApplicationUser applicationUser) {

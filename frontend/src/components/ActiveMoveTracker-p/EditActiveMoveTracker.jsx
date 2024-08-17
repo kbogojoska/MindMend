@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import "../../css/ActiveMoveTracker/ActiveMoveTracker.css";
 
-function EditActiveMoveTracker() {
+function EditActiveMoveTracker({ isAdmin, user, setUser }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -26,7 +26,10 @@ function EditActiveMoveTracker() {
       try {
         const result = await axios.get(
           `http://localhost:8080/api/activemove-tracker/${id}`
-        );
+        );        
+        if(user != null && user.username !== result.data.username && !isAdmin) {
+          navigate("/activemove-tracker");
+        }
         setFormData({
           dailySteps: result.data.dailySteps,
         });
@@ -41,7 +44,7 @@ function EditActiveMoveTracker() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -134,7 +137,7 @@ function EditActiveMoveTracker() {
                     value={formData.dailySteps}
                     onChange={handleChange}
                     min="0"
-                    max="10000"
+                    max="100000"
                   />
                 </div>
               </div>

@@ -1,14 +1,13 @@
 package mk.ukim.finki.wp.mindmend.model.DTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
+@Data
+@AllArgsConstructor
 public class DrinkingTrackerDTO {
+    private Long userId;
     private Integer numOfDrinks;
     private Integer maxDrinks;
-
-    public DrinkingTrackerDTO(Integer numOfDrinks, Integer maxDrinks) {
-        this.numOfDrinks = numOfDrinks;
-        this.maxDrinks=maxDrinks;
-    }
 }

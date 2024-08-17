@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import "../../css/MindfulMoment/MindfulMoment.css";
 
-function EditMindfulMoment() {
+function EditMindfulMoment({ isAdmin, user, setUser }) {
   const [formData, setFormData] = useState({
     startOfWorkShift: "",
     endOfWorkShift: "",
@@ -31,7 +31,10 @@ function EditMindfulMoment() {
       try {
         const result = await axios.get(
           `http://localhost:8080/api/mindful-moment/${id}`
-        );
+        );     
+        if(user != null && user.username !== result.data.username && !isAdmin) {
+          navigate("/drinking-tracker");
+        }
         setFormData(result.data);
         setLoading(false);
       } catch (error) {
@@ -44,7 +47,7 @@ function EditMindfulMoment() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

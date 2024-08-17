@@ -11,14 +11,12 @@ function SocialSphereItem(props) {
               <h5 className="mb-1">Sphere for user: <br/></h5>
               <h5 className="text-truncate">{props.user.username}</h5>
             </div>
-            <ul className="list-group activity-list">
-              {props.activitySuggestions.map((element, index) => (
-                <li className="list-group-item" key={index}>
-                    <p className='mb-0'>Activity: {element.name}</p>
-                    <p className='mb-0'>Description: {element.description}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="card-body p-2">
+              <h6 className="font-weight-bold">Activity of the day:</h6>
+              <h5 className="text-muted">{props.activityOfTheDay.name}</h5>
+              <p className="font-weight-bold mb-0">Description:</p>
+              <p className="text-muted mb-0">{props.activityOfTheDay.description}</p>
+            </div>
           </div>
         </div>
       </div>

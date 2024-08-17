@@ -7,10 +7,14 @@ import lombok.NoArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.Recipe;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MealPlanner{
 
     @Id
@@ -23,12 +27,15 @@ public class MealPlanner{
     @OneToOne
     private ApplicationUser user;
 
-    public MealPlanner(ApplicationUser user,List<Recipe> recipes) {
+    public MealPlanner(ApplicationUser user, List<Recipe> recipes) {
         this.user = user;
         this.recipes = recipes;
     }
 
-    public MealPlanner() {
-
+    public Recipe getPickOfTheDay(Long userId) {
+        LocalDate today = LocalDate.now();
+        long seed = today.getYear() * 10000L + today.getMonthValue() * 100L + today.getDayOfMonth() + userId*10;
+        Random random = new Random(seed);
+        return recipes.get(random.nextInt(recipes.size()));
     }
 }
