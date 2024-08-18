@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import "../../css/SleepTracker/SleepTracker.css";
 
-function EditSleepTracker() {
+function EditSleepTracker({ isAdmin, user, setUser }) {
   const [formData, setFormData] = useState({
     recommendedSleepTime: "",
     wakeUpTime: "",
@@ -29,7 +29,10 @@ function EditSleepTracker() {
       try {
         const result = await axios.get(
           `http://localhost:8080/api/sleep-tracker/${id}`
-        );
+        );    
+        if(user != null && user.username !== result.data.username && !isAdmin) {
+          navigate("/sleep-tracker");
+        }
         setFormData(result.data);
         setLoading(false);
       } catch (error) {
@@ -42,7 +45,7 @@ function EditSleepTracker() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

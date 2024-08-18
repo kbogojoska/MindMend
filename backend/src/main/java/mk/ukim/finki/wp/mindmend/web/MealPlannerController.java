@@ -1,12 +1,17 @@
 package mk.ukim.finki.wp.mindmend.web;
 
 import lombok.RequiredArgsConstructor;
+import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.DTO.MealPlannerDTO;
+import mk.ukim.finki.wp.mindmend.model.DTO.responses.MealPlannerResponseDTO;
 import mk.ukim.finki.wp.mindmend.model.habits.MealPlanner;
+import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
 import mk.ukim.finki.wp.mindmend.service.impl.MealPlannerServiceImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,35 +19,64 @@ import java.util.List;
 @RequestMapping("/api/meal-planner")
 public class MealPlannerController {
     private final MealPlannerServiceImpl mealPlannerService;
+    private final ApplicationUserService applicationUserService;
 
     @GetMapping(value = {"/",""})
-    public List<MealPlanner> listMealPlanners()
+    public List<MealPlannerResponseDTO> listMealPlanners()
     {
-        return this.mealPlannerService.findAllMealPlanners();
+        List<MealPlanner> mealPlanners = mealPlannerService.findAllMealPlanners();
+        return mealPlanners.stream().map(mealplanner -> new MealPlannerResponseDTO(mealplanner.getId(),
+                        mealplanner.getUser().getUsername(),
+                        mealplanner.getPickOfTheDay(mealplanner.getUser().getId())))
+                        .collect(Collectors.toList());
     }
 
     @GetMapping("/{mealId}")
-    public MealPlanner getMealPlannerById(@PathVariable Long mealId)
+    public ResponseEntity<MealPlannerResponseDTO> getMealPlannerById(@PathVariable Long mealId)
     {
-        return this.mealPlannerService.findById(mealId);
+        MealPlanner mealPlanner = mealPlannerService.findById(mealId);
+        MealPlannerResponseDTO mealPlannerResponseDTO = new MealPlannerResponseDTO(
+                mealPlanner.getId(),
+                mealPlanner.getUser().getUsername(),
+                mealPlanner.getPickOfTheDay(mealPlanner.getUser().getId())
+        );
+        return ResponseEntity.ok(mealPlannerResponseDTO);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<MealPlannerResponseDTO> getHydroTrackersByUserId(@PathVariable Long userId) {
+        MealPlanner mealPlanner = mealPlannerService.findByUser(applicationUserService.findById(userId));
+        MealPlannerResponseDTO mealPlannerResponseDTO = new MealPlannerResponseDTO(
+                mealPlanner.getId(),
+                mealPlanner.getUser().getUsername(),
+                mealPlanner.getPickOfTheDay(mealPlanner.getUser().getId())
+        );
+        return ResponseEntity.ok(mealPlannerResponseDTO);
     }
 
     @PostMapping("/add")
-    public MealPlanner create()
+    public MealPlanner create(@RequestBody MealPlannerDTO mealPlannerDTO)
     {
-        return this.mealPlannerService.create();
+        return this.mealPlannerService.create(applicationUserService.findById(mealPlannerDTO.getUserId()));
     }
 
     @PostMapping("/edit/{mealId}")
-    public MealPlanner edit(@RequestBody MealPlannerDTO mealPlannerDTO, @PathVariable Long mealId)
+    public ResponseEntity<MealPlannerResponseDTO> edit(@RequestBody MealPlannerDTO mealPlannerDTO, @PathVariable Long mealId)
     {
-        return this.mealPlannerService.edit(mealId,mealPlannerDTO);
+        MealPlanner mealPlanner = this.mealPlannerService.edit(mealId,mealPlannerDTO);
+        MealPlannerResponseDTO mealPlannerResponseDTO = new MealPlannerResponseDTO(
+                mealPlanner.getId(),
+                mealPlanner.getUser().getUsername(),
+                mealPlanner.getPickOfTheDay(mealPlanner.getUser().getId())
+        );
+        return ResponseEntity.ok(mealPlannerResponseDTO);
     }
 
     @PostMapping("/delete/{mealId}")
     public MealPlanner delete(@PathVariable Long mealId)
     {
-        return this.mealPlannerService.delete(mealId);
+        ApplicationUser applicationUser = mealPlannerService.findById(mealId).getUser();
+        return this.mealPlannerService.delete(mealId, applicationUser);
     }
 
 }

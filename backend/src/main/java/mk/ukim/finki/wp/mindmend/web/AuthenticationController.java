@@ -5,15 +5,13 @@ import jakarta.servlet.http.HttpSession;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.DTO.ApplicationAuthDTO;
 import mk.ukim.finki.wp.mindmend.model.DTO.ApplicationUserDTO;
-import mk.ukim.finki.wp.mindmend.model.DTO.AuthResponseDTO;
+import mk.ukim.finki.wp.mindmend.model.DTO.responses.AuthResponseDTO;
 import mk.ukim.finki.wp.mindmend.service.impl.ApplicationUserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -49,7 +47,9 @@ public class AuthenticationController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             UserDetails userForDTO = applicationUserService.loadUserByUsername(applicationAuthDTO.getUsername());
-            AuthResponseDTO responseDTO = new AuthResponseDTO(userForDTO.getUsername(), userForDTO.getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst().orElseThrow(() -> new IllegalStateException("User has no assigned roles")));
+            AuthResponseDTO responseDTO = new AuthResponseDTO(applicationUserService.findByUsername(userForDTO.getUsername()).getId(),
+                    userForDTO.getUsername(),
+                    userForDTO.getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst().orElseThrow(() -> new IllegalStateException("User has no assigned roles")));
             return ResponseEntity.ok(responseDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

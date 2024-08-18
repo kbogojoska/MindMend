@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import "../../css/ScreenTimeTracker/ScreenTimeTracker.css";
 
-function EditScreenTimeTracker() {
+function EditScreenTimeTracker({ isAdmin, user, setUser }) {
   const [formData, setFormData] = useState({
     workTimeStart: "",
     workTimeEnd: "",
@@ -29,7 +29,10 @@ function EditScreenTimeTracker() {
       try {
         const result = await axios.get(
           `http://localhost:8080/api/screen-tracker/${screenId}`
-        );
+        );     
+        if(user != null && user.username !== result.data.username && !isAdmin) {
+          navigate("/screen-tracker");
+        }
         setFormData({
           workTimeStart: result.data.workTimeStart,
           workTimeEnd: result.data.workTimeEnd,
@@ -45,7 +48,7 @@ function EditScreenTimeTracker() {
       }
     };
     fetchData();
-  }, [screenId]);
+  }, [screenId, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

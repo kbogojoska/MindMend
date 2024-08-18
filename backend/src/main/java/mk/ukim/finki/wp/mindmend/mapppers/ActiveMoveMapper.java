@@ -10,6 +10,7 @@ public class ActiveMoveMapper {
     public static ActiveMoveTrackerDTO MapToViewModel(ActiveMoveTracker moveTracker)
     {
         return new ActiveMoveTrackerDTO(
+                moveTracker.getUser().getId(),
                 moveTracker.getDailyStepsGoal()
         );
     }

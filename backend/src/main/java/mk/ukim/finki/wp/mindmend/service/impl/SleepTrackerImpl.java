@@ -1,8 +1,10 @@
 package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import mk.ukim.finki.wp.mindmend.model.exceptions.*;
+import mk.ukim.finki.wp.mindmend.model.habits.HydroTrack;
 import mk.ukim.finki.wp.mindmend.model.habits.SleepTracker;
-import mk.ukim.finki.wp.mindmend.model.exceptions.SleepTrackerNotFoundException;
+import mk.ukim.finki.wp.mindmend.model.habits.SmokingTracker;
 import mk.ukim.finki.wp.mindmend.repository.SleepTrackerRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
 import mk.ukim.finki.wp.mindmend.service.SleepTrackerService;
@@ -15,12 +17,9 @@ import java.util.List;
 public class SleepTrackerImpl implements SleepTrackerService {
 
     private final SleepTrackerRepository sleepTrackerRepository;
-    private final ApplicationUserService applicationUserService;
 
-    public SleepTrackerImpl(SleepTrackerRepository sleepTrackerRepository,
-                            ApplicationUserService applicationUserService) {
+    public SleepTrackerImpl(SleepTrackerRepository sleepTrackerRepository) {
         this.sleepTrackerRepository = sleepTrackerRepository;
-        this.applicationUserService = applicationUserService;
     }
 
     @Override
@@ -34,21 +33,17 @@ public class SleepTrackerImpl implements SleepTrackerService {
     }
 
     @Override
-    public SleepTracker create(Integer recommendedSleepTime, LocalTime wakeUpTime, LocalTime bedTime) {
-        // for testing method can run only once because of the one to one relation
-        // will be logged user later
-        ApplicationUser user = applicationUserService.create("pip", "pip.m.com", "123");
-        //
-        return recommendedSleepTime != null ?
-                sleepTrackerRepository.save(new SleepTracker(user, recommendedSleepTime, wakeUpTime, bedTime)) :
-                sleepTrackerRepository.save(new SleepTracker(user, wakeUpTime, bedTime));
-
-//        if (recommendedSleepTime != null) {
-//            sleepTracker = new SleepTracker(user, recommendedSleepTime, wakeUpTime, bedTime);
-//        } else {
-//            sleepTracker = new SleepTracker(user, wakeUpTime, bedTime);
-//        }
-//        return sleepTrackerRepository.save(sleepTracker);
+    public SleepTracker create(Integer recommendedSleepTime,
+                               LocalTime wakeUpTime,
+                               LocalTime bedTime,
+                               ApplicationUser user) {
+        if (sleepTrackerRepository.getSleepTrackerByApplicationUser(user).isPresent()) {
+            throw new SleepTrackerAlreadyExistsException();
+        }
+        return (recommendedSleepTime == null && wakeUpTime == null && bedTime == null) ?
+                sleepTrackerRepository.save(new SleepTracker(user)) :
+                (recommendedSleepTime == null ? sleepTrackerRepository.save(new SleepTracker(user, wakeUpTime, bedTime)) :
+                        sleepTrackerRepository.save(new SleepTracker(user, recommendedSleepTime, wakeUpTime, bedTime)));
     }
 
     @Override
@@ -62,9 +57,15 @@ public class SleepTrackerImpl implements SleepTrackerService {
     }
 
     @Override
-    public SleepTracker delete(Long Id) {
+    public SleepTracker delete(Long Id, ApplicationUser applicationUser) {
         SleepTracker sleepTracker = findById(Id);
         sleepTrackerRepository.delete(sleepTracker);
+        create(null, null, null, applicationUser);
         return sleepTracker;
+    }
+
+    @Override
+    public SleepTracker findByUser(ApplicationUser user) {
+        return sleepTrackerRepository.getSleepTrackerByApplicationUser(user).orElseThrow(SleepTrackerNotFoundException::new);
     }
 }

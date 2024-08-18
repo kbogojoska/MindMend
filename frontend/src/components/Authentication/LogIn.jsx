@@ -7,7 +7,7 @@ import { FaUser, FaLock } from "react-icons/fa6";
 import Alert from "@mui/material/Alert";
 import "../../css/Authentication/SignUp.css";
 
-function LogIn({ setLogged, setIsAdmin }) {
+function LogIn({ setLogged, setIsAdmin, user, setUser }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -45,6 +45,7 @@ function LogIn({ setLogged, setIsAdmin }) {
       });
       console.log(response.data.role);
       if (response.data.role === "ROLE_USER") {
+        setUser({userId: response.data.id, username: response.data.username});
         setIsAdmin(false);
       } else if (response.data.role === "ROLE_ADMIN") {
         setIsAdmin(true);

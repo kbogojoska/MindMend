@@ -4,9 +4,14 @@ import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.DTO.MealPlannerDTO;
 import mk.ukim.finki.wp.mindmend.mapppers.MealPlannerMapper;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
+import mk.ukim.finki.wp.mindmend.model.SocialActivity;
+import mk.ukim.finki.wp.mindmend.model.exceptions.MealPlannerAlreadyExistsException;
+import mk.ukim.finki.wp.mindmend.model.exceptions.SocialSphereAlreadyExistsException;
+import mk.ukim.finki.wp.mindmend.model.exceptions.SocialSphereNotFoundException;
 import mk.ukim.finki.wp.mindmend.model.habits.MealPlanner;
 import mk.ukim.finki.wp.mindmend.model.Recipe;
 import mk.ukim.finki.wp.mindmend.model.exceptions.MealPlannerNotFoundException;
+import mk.ukim.finki.wp.mindmend.model.habits.SocialSphere;
 import mk.ukim.finki.wp.mindmend.repository.MealPlannerRepository;
 import mk.ukim.finki.wp.mindmend.repository.RecipeRepository;
 import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
@@ -21,26 +26,29 @@ import java.util.stream.Collectors;
 public class MealPlannerServiceImpl implements MealPlannerService {
     private final MealPlannerRepository mealPlannerRepository;
     private final RecipeRepository recipeRepository;
-    private final ApplicationUserService applicationUserService;
 
 
     @Override
     public List<MealPlanner> findAllMealPlanners() {
-//        return MealPlannerMapper.MapToListViewModel(this.mealPlannerRepository.findAll());
         return this.mealPlannerRepository.findAll();
     }
 
     @Override
     public MealPlanner findById(Long id) {
-//        return MealPlannerMapper.MapToViewModel(mealPlannerRepository.findById(id).orElseThrow(MealPlannerNotFoundException::new));
         return this.mealPlannerRepository.findById(id).orElseThrow(MealPlannerNotFoundException::new);
     }
 
     @Override
-    public MealPlanner create() {
-        List<Recipe> randomRecipes = this.recipeRepository.findAll().stream().limit(5).collect(Collectors.toList());
-        ApplicationUser user = applicationUserService.create("kp", "kp7", "kp7@gmail.com");
-        return mealPlannerRepository.save(new MealPlanner(user, randomRecipes));
+    public MealPlanner create(ApplicationUser user) {
+        if (mealPlannerRepository.getMealPlannerByUser(user).isPresent()) {
+            throw new MealPlannerAlreadyExistsException();
+        }
+        List<Recipe> recipes = recipeRepository
+                .findAll()
+                .stream()
+                .limit(50)
+                .toList();
+        return mealPlannerRepository.save(new MealPlanner(user, recipes));
     }
 
     @Override
@@ -51,9 +59,15 @@ public class MealPlannerServiceImpl implements MealPlannerService {
     }
 
     @Override
-    public MealPlanner delete(Long id) {
+    public MealPlanner delete(Long id, ApplicationUser user) {
         MealPlanner mealPlanner = this.mealPlannerRepository.findById(id).orElseThrow(MealPlannerNotFoundException::new);
         this.mealPlannerRepository.delete(mealPlanner);
+        create(user);
         return mealPlanner;
+    }
+
+    @Override
+    public MealPlanner findByUser(ApplicationUser user) {
+        return mealPlannerRepository.getMealPlannerByUser(user).orElseThrow(MealPlannerNotFoundException::new);
     }
 }

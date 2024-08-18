@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import "../../css/HydroTracker/HydroTracker.css";
 
-function EditHydroTracker() {
+function EditHydroTracker({ isAdmin, user, setUser }) {
   const [formData, setFormData] = useState({
     numGlassesOfWater: "",
     personalGoal: "",
@@ -27,6 +27,9 @@ function EditHydroTracker() {
         const result = await axios.get(
           `http://localhost:8080/api/hydro-track/${id}`
         );
+        if(user != null && user.username !== result.data.username && !isAdmin) {
+          navigate("/hydro-track");
+        }
         setFormData(result.data);
         setLoading(false);
       } catch (error) {
@@ -39,7 +42,7 @@ function EditHydroTracker() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import "../../css/SmokingTracker/SmokingTracker.css";
 
-function EditSmokingTracker() {
+function EditSmokingTracker({ isAdmin, user, setUser }) {
   const [formData, setFormData] = useState({
     cigarettesPerDay: "",
     maxCigarettesPerDay: "",
@@ -26,7 +26,10 @@ function EditSmokingTracker() {
       try {
         const result = await axios.get(
           `http://localhost:8080/api/smoking-tracker/${id}`
-        );
+        );     
+        if(user != null && user.username !== result.data.username && !isAdmin) {
+          navigate("/smoking-tracker");
+        }
         setFormData(result.data);
         setLoading(false);
       } catch (error) {
@@ -39,7 +42,7 @@ function EditSmokingTracker() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

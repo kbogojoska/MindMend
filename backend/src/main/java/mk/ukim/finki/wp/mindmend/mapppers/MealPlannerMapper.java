@@ -10,6 +10,7 @@ public class MealPlannerMapper {
     public static MealPlannerDTO MapToViewModel(MealPlanner mealPlanner)
     {
         return new MealPlannerDTO(
+                mealPlanner.getUser().getId(),
                 mealPlanner.getRecipes()
         );
     }

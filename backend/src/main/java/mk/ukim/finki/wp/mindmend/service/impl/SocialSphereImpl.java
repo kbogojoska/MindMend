@@ -2,11 +2,11 @@ package mk.ukim.finki.wp.mindmend.service.impl;
 
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.SocialActivity;
+import mk.ukim.finki.wp.mindmend.model.exceptions.SocialSphereAlreadyExistsException;
 import mk.ukim.finki.wp.mindmend.model.habits.SocialSphere;
 import mk.ukim.finki.wp.mindmend.model.exceptions.SocialSphereNotFoundException;
 import mk.ukim.finki.wp.mindmend.repository.SocialActivityRepository;
 import mk.ukim.finki.wp.mindmend.repository.SocialSphereRepository;
-import mk.ukim.finki.wp.mindmend.service.ApplicationUserService;
 import mk.ukim.finki.wp.mindmend.service.SocialSphereService;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +16,11 @@ import java.util.List;
 public class SocialSphereImpl implements SocialSphereService {
 
     private final SocialSphereRepository socialSphereRepository;
-    private final ApplicationUserService applicationUserService;
     private final SocialActivityRepository socialActivityRepository;
 
     public SocialSphereImpl(SocialSphereRepository socialSphereRepository,
-                            ApplicationUserService applicationUserService,
                             SocialActivityRepository socialActivityRepository) {
         this.socialSphereRepository = socialSphereRepository;
-        this.applicationUserService = applicationUserService;
         this.socialActivityRepository = socialActivityRepository;
     }
 
@@ -38,15 +35,14 @@ public class SocialSphereImpl implements SocialSphereService {
     }
 
     @Override
-    public SocialSphere create() {
-        // for testing method can run only once because of the one to one relation
-        // will be logged user later
-        ApplicationUser user = applicationUserService.create("pip", "pip.m.com", "123");
-        //
+    public SocialSphere create(ApplicationUser user) {
+        if (socialSphereRepository.getSocialSphereByApplicationUser(user).isPresent()) {
+            throw new SocialSphereAlreadyExistsException();
+        }
         List<SocialActivity> activities = socialActivityRepository
                 .findAll()
                 .stream()
-                .limit(5)
+                .limit(50)
                 .toList();
         return socialSphereRepository.save(new SocialSphere(activities, user));
     }
@@ -59,9 +55,15 @@ public class SocialSphereImpl implements SocialSphereService {
     }
 
     @Override
-    public SocialSphere delete(Long Id) {
+    public SocialSphere delete(Long Id, ApplicationUser applicationUser) {
         SocialSphere socialSphere = findById(Id);
         socialSphereRepository.delete(socialSphere);
+        create(applicationUser);
         return socialSphere;
+    }
+
+    @Override
+    public SocialSphere findByUser(ApplicationUser user) {
+        return socialSphereRepository.getSocialSphereByApplicationUser(user).orElseThrow(SocialSphereNotFoundException::new);
     }
 }

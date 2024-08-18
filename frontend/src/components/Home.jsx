@@ -11,7 +11,7 @@ import MindfulMomentDisclosure from "./HabitDisclosures/MindfulMomentDisclosure"
 import SocialSphereDisclosure from "./HabitDisclosures/SocialSphereDisclosure";
 import "../css/Home.css";
 
-function Home({ isLogged, setIsLogged, isAdmin, setIsAdmin }) {
+function Home({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser  }) {
   return (
     <div id="home" className="bg-white rounded-xl fade-in-content">
       <section className="py-8 md:py-16">

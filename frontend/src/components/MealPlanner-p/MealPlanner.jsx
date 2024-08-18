@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
-import { FaPlus, FaPenToSquare, FaTrash } from "react-icons/fa6";
+import { FaPlus, FaTrash } from "react-icons/fa6";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
+import MealPlannerItem from "./MealPlannerItem";
 import "../../css/MealPlanner/MealPlanner.css";
 
 function MealPlanner() {
-  const [mealPlanners, setMealPlanners] = useState([]);
+  const [axiosData, setAxiosData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     connectionErrorLoadingData: "",
@@ -24,7 +25,7 @@ function MealPlanner() {
     setLoading(true);
     try {
       const result = await axios.get("http://localhost:8080/api/meal-planner");
-      setMealPlanners(result.data);
+      setAxiosData(result.data);
     } catch (error) {
       setErrors((prevState) => ({
         ...prevState,
@@ -46,9 +47,9 @@ function MealPlanner() {
     navigate(`/meal-planner/add`);
   };
 
-  const handleEdit = (id) => {
-    navigate(`/meal-planner/edit/${id}`);
-  };
+  // const handleEdit = (id) => {
+  //   navigate(`/meal-planner/edit/${id}`);
+  // };
 
   const handleDelete = async (id, event) => {
     event.stopPropagation();
@@ -110,9 +111,9 @@ function MealPlanner() {
           >
             <Grid
               container
-              justifyContent={`${mealPlanners.length === 0 ? "center" : "right"}`}
+              justifyContent={`${axiosData.length === 0 ? "center" : "right"}`}
               sx={{
-                paddingLeft: `${mealPlanners.length === 0 ? "2.5rem" : null}`,
+                paddingLeft: `${axiosData.length === 0 ? "2.5rem" : null}`,
               }}
             >
               <div id="add-btn" onClick={() => handleAdd()}>
@@ -121,7 +122,7 @@ function MealPlanner() {
                 </span>
               </div>
             </Grid>
-            {mealPlanners.length === 0 && (
+            {axiosData.length === 0 && (
               <div className="justify-content-center align-items-center m-2">
                 <h5>
                   There are currently no Meal Planners. Create one using the plus
@@ -135,7 +136,7 @@ function MealPlanner() {
               alignItems="center"
               alignContent="space-evenly"
             >
-              {mealPlanners.map((mealPlanner, index) => (
+              {axiosData.map((mealPlanner, index) => (
                 <Grid
                   item
                   xs={12}
@@ -151,19 +152,19 @@ function MealPlanner() {
                     minWidth: "250px",
                   }}
                 >
-                  <div>
-                    <h3>User: {mealPlanner.user.username}</h3>
-                    <p>Recipes: {mealPlanner.recipes.map(recipe => recipe.name).join(", ")}</p>
-                  </div>
+                  <MealPlannerItem
+                    user={mealPlanner}
+                    recipeOfTheDay={mealPlanner.recipeOfTheDay}
+                  />
                   <div id="edit-delete-container">
-                    <div
+                    {/* <div
                       className="edit-delete-btn"
                       onClick={() => handleEdit(mealPlanner.id)}
                     >
                       <span className="crud-button-text unselectable">
                         <FaPenToSquare size={18} className="unselectable" />
                       </span>
-                    </div>
+                    </div> */}
                     <div
                       className="edit-delete-btn"
                       onClick={(event) => handleDelete(mealPlanner.id, event)}

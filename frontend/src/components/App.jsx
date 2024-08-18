@@ -10,6 +10,11 @@ import "react-notifications-component/dist/theme.css";
 function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  
+  const [user, setUser] = useState({
+    userId: "",
+    username: ""
+  });
 
   // List of habit names
   const habitNames = [
@@ -89,6 +94,8 @@ function App() {
             setIsLogged={setIsUserAuthenticated}
             isAdmin={isAdmin}
             setIsAdmin={setIsAdmin}
+            user={user}
+            setUser={setUser}
           />
         </div>
         <Footer />
