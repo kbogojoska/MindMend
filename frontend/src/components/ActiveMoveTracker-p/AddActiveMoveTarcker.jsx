@@ -22,28 +22,28 @@ function AddActiveMoveTracker() {
       setErrors({ dailySteps: "Daily steps goal is required" });
       return;
     }
-
+  
     setLoading(true);
     try {
       // Save the habit first
       const response = await axios.post("http://localhost:8080/api/activemove-tracker/add", {
         formData,
       });
-
+  
       const habitId = response.data.id.toString(); // Assuming the API returns the saved habit ID
-
+  
       if (reminder) {
         const username = localStorage.getItem("loggedInUser");
         if (username) {
           const userRemindersKey = `${username}_reminders`;
           const reminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
-
+  
           // Associate reminder with the saved habit ID
           reminders.push({ ...reminder, habitId });
           localStorage.setItem(userRemindersKey, JSON.stringify(reminders));
         }
       }
-
+  
       navigate("/activemove-tracker");
     } catch (error) {
       setErrors((prevState) => ({
@@ -54,7 +54,6 @@ function AddActiveMoveTracker() {
       setLoading(false);
     }
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -70,18 +69,19 @@ function AddActiveMoveTracker() {
   const handleSetReminder = (reminderDateTime) => {
     const reminderDate = new Date(reminderDateTime);
     const now = new Date();
-
+  
     if (reminderDate <= now) {
       console.log("Reminder time has already passed.");
       return;
     }
-
+  
     const message = `Don't forget to reach your target goal today of ${formData.dailySteps} steps!`;
-
+  
     // Temporarily store the reminder with a unique ID
-    setReminder({ time: reminderDate.toISOString(), message });
-    console.log("Reminder prepared:", { time: reminderDate.toISOString(), message });
+    setReminder({ id: Date.now().toString(), time: reminderDate.toISOString(), message });
+    console.log("Reminder prepared:", { id: Date.now().toString(), time: reminderDate.toISOString(), message });
   };
+  
 
   const handleOpenReminderPopup = () => {
     setShowReminderPopup(true);

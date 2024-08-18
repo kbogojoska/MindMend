@@ -49,25 +49,23 @@ function EditActiveMoveTracker() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!formData.dailySteps) {
       setErrors({ dailySteps: "Steps goal is required!" });
       return;
     }
-
+  
     setLoading(true);
     try {
-
       await axios.post(`http://localhost:8080/api/activemove-tracker/edit/${id}`, formData);
-
+  
       const username = localStorage.getItem("loggedInUser");
       if (username && reminder) {
         const userRemindersKey = `${username}_reminders`;
         const storedReminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
-
+  
         let updatedReminders;
         if (selectedReminderId) {
-
           updatedReminders = storedReminders.map(r =>
             r.id === selectedReminderId
               ? { ...r, time: reminder.time, message: reminder.message }
@@ -76,10 +74,10 @@ function EditActiveMoveTracker() {
         } else {
           updatedReminders = [...storedReminders, { ...reminder, habitId: id }];
         }
-
+  
         localStorage.setItem(userRemindersKey, JSON.stringify(updatedReminders));
       }
-
+  
       navigate("/activemove-tracker");
     } catch (error) {
       setErrors((prevState) => ({
@@ -90,19 +88,20 @@ function EditActiveMoveTracker() {
       setLoading(false);
     }
   };
+  
 
   // Function to handle setting or editing a reminder
   const handleSetOrEditReminder = (reminderDateTime) => {
     const reminderDate = new Date(reminderDateTime);
     const now = new Date();
-
+  
     if (reminderDate <= now) {
       console.log("Reminder time has already passed.");
       return;
     }
-
+  
     const message = `Don't forget to reach your target goal today of ${formData.dailySteps} steps!`;
-
+  
     // Store the reminder details in the state
     setReminder({
       id: selectedReminderId || Date.now().toString(),
@@ -111,6 +110,7 @@ function EditActiveMoveTracker() {
       message,
     });
   };
+  
 
   return (
     <>
