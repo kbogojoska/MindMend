@@ -22,7 +22,6 @@ function ReminderPopup({ onSetReminder, onClose }) {
     onClose();
   };
 
-  // Function to format date and time as mm-dd-yyyy hh:mm
   const formatDateTime = (date, time) => {
     return `${date} ${time}`;
   };

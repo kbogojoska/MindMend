@@ -49,7 +49,7 @@ function EditSleepTracker({ isAdmin, user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!formData.wakeUpTime || !formData.bedTime) {
       setErrors({
         wakeUpTime: !formData.wakeUpTime ? "Wake-up time is required!" : "",
@@ -57,12 +57,62 @@ function EditSleepTracker({ isAdmin, user, setUser }) {
       });
       return;
     }
-
+  
     const updatedFormData = {
       ...formData,
       recommendedSleepTime: formData.recommendedSleepTime || "8",
     };
+  
+    const today = new Date();
+    const todayDate = today.toISOString().split('T')[0]; 
+  
+    const parseTime = (timeStr) => {
+      const [hours, minutes] = timeStr.split(':');
+      return new Date(`${todayDate}T${hours}:${minutes}:00Z`);
+    };
+  
+    const bedtime = parseTime(formData.bedTime);
+    const wakeupTime = parseTime(formData.wakeUpTime);
+  
+    const now = new Date();
+  
+    if (bedtime <= now) {
+      bedtime.setDate(bedtime.getDate() + 1); 
+    }
+    
+    if (wakeupTime <= now) {
+      wakeupTime.setDate(wakeupTime.getDate() + 1); 
+    }
+    const preBedtimeReminderTime = new Date(bedtime.getTime() - 30 * 60000);
+  
+    // Debug
+    console.log("Bedtime:", bedtime.toISOString());
+    console.log("Wakeup Time:", wakeupTime.toISOString());
+    console.log("Pre-Bedtime Reminder Time:", preBedtimeReminderTime.toISOString());
+  
+    if (isNaN(bedtime.getTime()) || isNaN(wakeupTime.getTime()) || isNaN(preBedtimeReminderTime.getTime())) {
+      setErrors({
+        ...errors,
+        connectionErrorEditById: "Invalid time value provided.",
+      });
+      return;
+    }
+  
+    const reminders = [];
+    reminders.push({
+      time: preBedtimeReminderTime.toISOString(),
+      message: `Time to wind down! You should be in bed in ${formData.recommendedSleepTime} hours.`,
+      habitId: id,
+    });
+  
+    reminders.push({
+      time: wakeupTime.toISOString(),
+      message: "Time to wake up!",
+      habitId: id,
+    });
 
+    localStorage.setItem(`${user.username}_sleep_reminders`, JSON.stringify(reminders));
+  
     setLoading(true);
     try {
       await axios.post(
@@ -79,7 +129,7 @@ function EditSleepTracker({ isAdmin, user, setUser }) {
       setLoading(false);
     }
   };
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({

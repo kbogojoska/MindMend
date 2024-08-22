@@ -19,7 +19,7 @@ function EditScreenTimeTracker({ isAdmin, user, setUser }) {
     workTimeEnd: "",
   });
 
-  const { screenId } = useParams();
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -28,9 +28,9 @@ function EditScreenTimeTracker({ isAdmin, user, setUser }) {
       setLoading(true);
       try {
         const result = await axios.get(
-          `http://localhost:8080/api/screen-tracker/${screenId}`
-        );     
-        if(user != null && user.username !== result.data.username && !isAdmin) {
+          `http://localhost:8080/api/screen-tracker/${id}`
+        );
+        if (user != null && user.username !== result.data.username && !isAdmin) {
           navigate("/screen-tracker");
         }
         setFormData({
@@ -48,7 +48,7 @@ function EditScreenTimeTracker({ isAdmin, user, setUser }) {
       }
     };
     fetchData();
-  }, [screenId, user, navigate, isAdmin]);
+  }, [id, user, navigate, isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,10 +68,40 @@ function EditScreenTimeTracker({ isAdmin, user, setUser }) {
     setLoading(true);
     try {
       await axios.post(
-        `http://localhost:8080/api/screen-tracker/edit/${screenId}`,
+        `http://localhost:8080/api/screen-tracker/edit/${id}`,
         formData
       );
-      navigate("/screen-time-tracker");
+
+      const reminders = [];
+      const reminderMinutesBefore = 10; 
+
+      const getReminderTime = (timeStr) => {
+        const [hours, minutes] = timeStr.split(':');
+        const now = new Date();
+        const reminderTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes - reminderMinutesBefore, 0, 0);
+
+        if (reminderTime < now) {
+          reminderTime.setDate(reminderTime.getDate() + 1);
+        }
+        return reminderTime;
+      };
+
+      const workTimeStartReminder = getReminderTime(formData.workTimeStart);
+      const workTimeEndReminder = getReminderTime(formData.workTimeEnd);
+
+      reminders.push({
+        time: workTimeStartReminder.toISOString(),
+        message: "Reminder: Your work time is about to start.",
+      });
+
+      reminders.push({
+        time: workTimeEndReminder.toISOString(),
+        message: "Reminder: Your work time is about to end.",
+      });
+
+      localStorage.setItem(`${user.username}_screen_time_reminders`, JSON.stringify(reminders));
+
+      navigate("/screen-tracker");
     } catch (error) {
       setErrors((prevState) => ({
         ...prevState,
@@ -103,7 +133,7 @@ function EditScreenTimeTracker({ isAdmin, user, setUser }) {
         <div>
           <CircularProgress />
         </div>
-      ) : (
+      ) : !errors.connectionErrorEditById && !errors.connectionErrorFindById ? (
         <Grid
           container
           justifyContent="center"
@@ -179,13 +209,22 @@ function EditScreenTimeTracker({ isAdmin, user, setUser }) {
                 )}
               </div>
               <div className="position-button">
-                <button id="edit-form-button" type="submit">
+                <button id="add-form-button" type="submit">
                   <span>Edit Screen Time Tracker</span>
                 </button>
               </div>
             </form>
           </Grid>
         </Grid>
+      ) : (
+        <div className="d-flex justify-content-center align-items-center error-container">
+          {errors.connectionErrorEditById && (
+            <div className="p-2 error">{errors.connectionErrorEditById}</div>
+          )}
+          {errors.connectionErrorFindById && (
+            <div className="p-2 error">{errors.connectionErrorFindById}</div>
+          )}
+        </div>
       )}
     </>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
+import ReminderPopup from "../ReminderPopup";
 import "../../css/MindfulMoment/MindfulMoment.css";
 
 function AddMindfulMoment() {
@@ -14,13 +15,15 @@ function AddMindfulMoment() {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
-    connectionErrorEditById: "",
-    connectionErrorFindById: "",
+    connectionErrorAdd: "",
     startOfWorkShift: "",
     endOfWorkShift: "",
     stressLevel: "",
     stressLevelFromZeroToFour: "",
   });
+  const [showReminderPopup, setShowReminderPopup] = useState(false);
+  const [reminder, setReminder] = useState(null);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -56,6 +59,18 @@ function AddMindfulMoment() {
         "http://localhost:8080/api/mindful-moment/add",
         formData
       );
+
+      if (reminder) {
+        const username = localStorage.getItem("loggedInUser");
+        if (username) {
+          const userRemindersKey = `${username}_mindful_reminders`;
+          const reminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
+
+          reminders.push({ ...reminder, habitId: Date.now().toString() });
+          localStorage.setItem(userRemindersKey, JSON.stringify(reminders));
+        }
+      }
+
       navigate("/mindful-moment");
     } catch (error) {
       setErrors((prevState) => ({
@@ -77,6 +92,29 @@ function AddMindfulMoment() {
       ...prevState,
       [name]: "",
     }));
+  };
+
+  const handleSetReminder = (reminderDateTime) => {
+    const reminderDate = new Date(reminderDateTime);
+    const now = new Date();
+
+    if (reminderDate <= now) {
+      console.log("Reminder time has already passed.");
+      return;
+    }
+
+    const message = `Don't forget to focus on your mindful moment! Stress Level: ${formData.stressLevel}`;
+
+    setReminder({ id: Date.now().toString(), time: reminderDate.toISOString(), message });
+    console.log("Reminder prepared:", { id: Date.now().toString(), time: reminderDate.toISOString(), message });
+  };
+
+  const handleOpenReminderPopup = () => {
+    setShowReminderPopup(true);
+  };
+
+  const handleCloseReminderPopup = () => {
+    setShowReminderPopup(false);
   };
 
   return (
@@ -183,11 +221,20 @@ function AddMindfulMoment() {
                   </div>
                 </div>
                 <div className="position-button">
+                  <button id="add-form-button" type="button" onClick={handleOpenReminderPopup}>
+                    <span>Set Reminder</span>
+                  </button>
                   <button id="add-form-button" type="submit">
                     <span>Add Mindful Moment</span>
                   </button>
                 </div>
               </form>
+              {showReminderPopup && (
+                <ReminderPopup
+                  onSetReminder={handleSetReminder}
+                  onClose={handleCloseReminderPopup}
+                />
+              )}
             </Grid>
           )}
         </Grid>

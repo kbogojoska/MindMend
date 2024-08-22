@@ -76,8 +76,8 @@ function Body({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser }) {
                   <Route exact path="/drinking-tracker" element={<DrinkingTracker />} /> 
                   <Route path="/drinking-tracker/add" element={<AddDrinkingTracker />} /> 
                   <Route path="/drinking-tracker/edit/:id" element={<EditDrinkingTracker />} />
-                  <Route exact path="/screentime-tracker" element={<ScreenTimeTracker />} /> 
-                  <Route path="/screentime-tracker/add" element={<AddScreenTimeTracker />} /> 
+                  <Route exact path="/screen-tracker" element={<ScreenTimeTracker />} /> 
+                  <Route path="/screen-tracker/add" element={<AddScreenTimeTracker />} /> 
                   <Route exact path="/activemove-tracker" element={<ActiveMoveTracker />} />
                   <Route path="/activemove-tracker/add" element={<AddActiveMoveTracker />} />
                   <Route path="/activemove-tracker/edit/:id" element={<EditActiveMoveTracker />} />
@@ -91,7 +91,7 @@ function Body({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser }) {
                   <Route exact path="/mindful-moment" element={<MindfulMomentForUser user={user} setUser={setUser}/>} />
                   <Route exact path="/sleep-tracker" element={<SleepTrackerForUser user={user} setUser={setUser}/>} /> 
                   <Route exact path="/smoking-tracker" element={<SmokingTrackerForUser user={user} setUser={setUser}/>} />
-                  <Route exact path="/screentime-tracker" element={<ScreenTimeTrackerForUser user={user} setUser={setUser}/>} /> 
+                  <Route exact path="/screen-tracker" element={<ScreenTimeTrackerForUser user={user} setUser={setUser}/>} /> 
                   <Route exact path="/meal-planner" element={<MealPlannerForUser user={user} setUser={setUser}/>} /> 
                   <Route exact path="/social-sphere" element={<SocialSphereForUser user={user} setUser={setUser}/>} /> 
                 </>)
@@ -102,7 +102,7 @@ function Body({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser }) {
               <Route path="/mindful-moment/edit/:id" element={<EditMindfulMoment isAdmin={isAdmin} user={user} setUser={setUser}/>} />
               <Route path="/sleep-tracker/edit/:id" element={<EditSleepTracker isAdmin={isAdmin} user={user} setUser={setUser}/>} />
               <Route path="/smoking-tracker/edit/:id" element={<EditSmokingTracker isAdmin={isAdmin} user={user} setUser={setUser}/>}/>
-              <Route path="/screentime-tracker/edit/:id" element={<EditScreenTimeTracker isAdmin={isAdmin} user={user} setUser={setUser}/>} />
+              <Route path="/screen-tracker/edit/:id" element={<EditScreenTimeTracker isAdmin={isAdmin} user={user} setUser={setUser}/>} />
               
               <Route path="/logout" element={<LogOut isLogged={isLogged} setLogged={setIsLogged} user={user} setUser={setUser}/>} />
             </> ) : (

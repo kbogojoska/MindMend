@@ -152,3 +152,24 @@
     width: 100%;
   }
   
+  .item-container {
+    align-items: flex-start; 
+    gap: 20px; 
+    max-width: 100%;
+  }
+  
+  .gif-container {
+    flex-shrink: 0; 
+  }
+  
+  .rounded-gif {
+    max-width: 370px; 
+    height: auto; 
+    border-radius: 10px;
+  }
+  
+  .tracker-container {
+    flex-grow: 1; 
+    min-width: 300px; 
+    max-width: 100%;
+  }

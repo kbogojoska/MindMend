@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
+import ReminderPopup from "../ReminderPopup"; 
 import "../../css/DrinkingTracker/DrinkingTracker.css";
 
 function EditDrinkTracker({ isAdmin, user, setUser }) {
@@ -23,27 +24,39 @@ function EditDrinkTracker({ isAdmin, user, setUser }) {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showReminderPopup, setShowReminderPopup] = useState(false);
+  const [selectedReminderId, setSelectedReminderId] = useState(null);
+  const [reminder, setReminder] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const result = await axios.get(
-          `http://localhost:8080/api/drinking-tracker/${id}`
-        );      
-        if(user != null && user.username !== result.data.username && !isAdmin) {
+        const result = await axios.get(`http://localhost:8080/api/drinking-tracker/${id}`);
+        if (user != null && user.username !== result.data.username && !isAdmin) {
           navigate("/drinking-tracker");
         }
         setFormData({
           numOfDrinks: result.data.numOfDrinks,
           maxDrinks: result.data.maxDrinks,
         });
+
+        const username = localStorage.getItem("loggedInUser");
+        if (username) {
+          const userRemindersKey = `${username}_drink_reminders`;
+          const storedReminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
+          const habitReminder = storedReminders.find(r => r.habitId === id);
+          if (habitReminder) {
+            setReminder(habitReminder);
+            setSelectedReminderId(habitReminder.id);
+          }
+        }
+
         setLoading(false);
       } catch (error) {
         setErrors((prevState) => ({
           ...prevState,
-          connectionErrorFindById:
-            "There was an error accessing the drink tracker",
+          connectionErrorFindById: "There was an error accessing the drink tracker",
         }));
         setLoading(false);
       }
@@ -56,12 +69,8 @@ function EditDrinkTracker({ isAdmin, user, setUser }) {
 
     if (!formData.numOfDrinks || !formData.maxDrinks) {
       setErrors({
-        numOfDrinks: !formData.numOfDrinks
-          ? "Number of drinks is required!"
-          : "",
-        maxDrinks: !formData.maxDrinks
-          ? "Setting a drinking limit is required!"
-          : "",
+        numOfDrinks: !formData.numOfDrinks ? "Number of drinks is required!" : "",
+        maxDrinks: !formData.maxDrinks ? "Setting a drinking limit is required!" : "",
         connectionErrorEditById: "",
         connectionErrorFindById: "",
       });
@@ -70,10 +79,27 @@ function EditDrinkTracker({ isAdmin, user, setUser }) {
 
     setLoading(true);
     try {
-      await axios.post(
-        `http://localhost:8080/api/drinking-tracker/edit/${id}`,
-        formData
-      );
+      await axios.post(`http://localhost:8080/api/drinking-tracker/edit/${id}`, formData);
+
+      const username = localStorage.getItem("loggedInUser");
+      if (username && reminder) {
+        const userRemindersKey = `${username}_drink_reminders`;
+        const storedReminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
+        
+        let updatedReminders;
+        if (selectedReminderId) {
+          updatedReminders = storedReminders.map(r =>
+            r.id === selectedReminderId
+              ? { ...r, time: reminder.time, message: reminder.message }
+              : r
+          );
+        } else {
+          updatedReminders = [...storedReminders, { ...reminder, habitId: id }];
+        }
+
+        localStorage.setItem(userRemindersKey, JSON.stringify(updatedReminders));
+      }
+
       navigate("/drinking-tracker");
     } catch (error) {
       setErrors((prevState) => ({
@@ -95,6 +121,25 @@ function EditDrinkTracker({ isAdmin, user, setUser }) {
       ...prevState,
       [name]: "",
     }));
+  };
+
+  const handleSetOrEditReminder = (reminderDateTime) => {
+    const reminderDate = new Date(reminderDateTime);
+    const now = new Date();
+
+    if (reminderDate <= now) {
+      console.log("Reminder time has already passed.");
+      return;
+    }
+
+    const message = `Don't forget to monitor your drinking habit! Goal: ${formData.numOfDrinks} drinks, Max: ${formData.maxDrinks} drinks.`;
+
+    setReminder({
+      id: selectedReminderId || Date.now().toString(),
+      habitId: id,
+      time: reminderDate.toISOString(),
+      message,
+    });
   };
 
   return (
@@ -175,11 +220,30 @@ function EditDrinkTracker({ isAdmin, user, setUser }) {
                 </div>
               </div>
               <div className="position-button">
+                <button 
+                  id="add-form-button" 
+                  type="button" 
+                  onClick={() => {
+                    setShowReminderPopup(true); 
+                  }}
+                >
+                  <span>{selectedReminderId ? "Update Reminder" : "Set Reminder"}</span>
+                </button>
                 <button id="add-form-button" type="submit">
                   <span>Edit Drink Tracker</span>
                 </button>
               </div>
             </form>
+            {showReminderPopup && (
+              <ReminderPopup
+                onSetReminder={(reminderDateTime) => {
+                  handleSetOrEditReminder(reminderDateTime);
+                  setShowReminderPopup(false); 
+                }}
+                onClose={() => setShowReminderPopup(false)}
+                initialDateTime={reminder?.time} 
+              />
+            )}
           </Grid>
         </Grid>
       ) : (

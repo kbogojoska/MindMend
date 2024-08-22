@@ -25,20 +25,18 @@ function AddActiveMoveTracker() {
   
     setLoading(true);
     try {
-      // Save the habit first
       const response = await axios.post("http://localhost:8080/api/activemove-tracker/add", {
         formData,
       });
   
-      const habitId = response.data.id.toString(); // Assuming the API returns the saved habit ID
+      const habitId = response.data.id.toString(); 
   
       if (reminder) {
         const username = localStorage.getItem("loggedInUser");
         if (username) {
-          const userRemindersKey = `${username}_reminders`;
+          const userRemindersKey = `${username}_active_reminders`;
           const reminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
-  
-          // Associate reminder with the saved habit ID
+
           reminders.push({ ...reminder, habitId });
           localStorage.setItem(userRemindersKey, JSON.stringify(reminders));
         }
@@ -76,8 +74,7 @@ function AddActiveMoveTracker() {
     }
   
     const message = `Don't forget to reach your target goal today of ${formData.dailySteps} steps!`;
-  
-    // Temporarily store the reminder with a unique ID
+
     setReminder({ id: Date.now().toString(), time: reminderDate.toISOString(), message });
     console.log("Reminder prepared:", { id: Date.now().toString(), time: reminderDate.toISOString(), message });
   };

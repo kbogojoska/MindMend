@@ -26,7 +26,7 @@ function EditActiveMoveTracker() {
 
         const username = localStorage.getItem("loggedInUser");
         if (username) {
-          const userRemindersKey = `${username}_reminders`;
+          const userRemindersKey = `${username}_active_reminders`;
           const storedReminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
           const habitReminder = storedReminders.find(r => r.habitId === id);
           if (habitReminder) {
@@ -61,7 +61,7 @@ function EditActiveMoveTracker() {
   
       const username = localStorage.getItem("loggedInUser");
       if (username && reminder) {
-        const userRemindersKey = `${username}_reminders`;
+        const userRemindersKey = `${username}_active_reminders`;
         const storedReminders = JSON.parse(localStorage.getItem(userRemindersKey)) || [];
   
         let updatedReminders;
@@ -90,7 +90,6 @@ function EditActiveMoveTracker() {
   };
   
 
-  // Function to handle setting or editing a reminder
   const handleSetOrEditReminder = (reminderDateTime) => {
     const reminderDate = new Date(reminderDateTime);
     const now = new Date();
@@ -102,7 +101,6 @@ function EditActiveMoveTracker() {
   
     const message = `Don't forget to reach your target goal today of ${formData.dailySteps} steps!`;
   
-    // Store the reminder details in the state
     setReminder({
       id: selectedReminderId || Date.now().toString(),
       habitId: id,
@@ -165,7 +163,7 @@ function EditActiveMoveTracker() {
               <ReminderPopup
                 onSetReminder={(reminderDateTime) => {
                   handleSetOrEditReminder(reminderDateTime);
-                  setShowReminderPopup(false); // Close popup after setting or editing the reminder
+                  setShowReminderPopup(false); 
                 }}
                 onClose={() => setShowReminderPopup(false)}
               />
