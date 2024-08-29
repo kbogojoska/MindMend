@@ -16,7 +16,6 @@ function App() {
     username: ""
   });
 
-  // List of habit names
   const habitNames = [
     "sleep-tracker",
     "mindful-moment",

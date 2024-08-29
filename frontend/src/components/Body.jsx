@@ -1,50 +1,50 @@
 import React from 'react'
 import {Route, Routes, Navigate} from 'react-router-dom';
 
-import SleepTracker from './SleepTracker-b/SleepTracker';
-import SleepTrackerForUser from './SleepTracker-b/PerUser/SleepTrackerForUser';
-import AddSleepTracker from './SleepTracker-b/AddSleepTracker';
-import EditSleepTracker from './SleepTracker-b/EditSleepTracker';
+import SleepTracker from './SleepTracker/SleepTracker';
+import SleepTrackerForUser from './SleepTracker/PerUser/SleepTrackerForUser';
+import AddSleepTracker from './SleepTracker/AddSleepTracker';
+import EditSleepTracker from './SleepTracker/EditSleepTracker';
 
-import SocialSphere from './SocialSphere-b/SocialSphere';
-import SocialSphereForUser from './SocialSphere-b/PerUser/SocialSphereForUser';
-import AddSocialSphere from './SocialSphere-b/AddSocialSphere';
-// import EditSocialSphere from './SocialSphere-b/EditSocialSphere';
+import SocialSphere from './SocialSphere/SocialSphere';
+import SocialSphereForUser from './SocialSphere/PerUser/SocialSphereForUser';
+import AddSocialSphere from './SocialSphere/AddSocialSphere';
+// import EditSocialSphere from './SocialSphere/EditSocialSphere';
 
-import MindfulMoment from './MindfulMoment-b/MindfulMoment';
-import MindfulMomentForUser from './MindfulMoment-b/PerUser/MindfulMomentForUser';
-import AddMindfulMoment from './MindfulMoment-b/AddMindfulMoment';
-import EditMindfulMoment from './MindfulMoment-b/EditMindfulMoment';
+import MindfulMoment from './MindfulMoment/MindfulMoment';
+import MindfulMomentForUser from './MindfulMoment/PerUser/MindfulMomentForUser';
+import AddMindfulMoment from './MindfulMoment/AddMindfulMoment';
+import EditMindfulMoment from './MindfulMoment/EditMindfulMoment';
 
-import HydroTracker from './HydroTracker-b/HydroTracker';
-import HydroTrackerForUser from './HydroTracker-b/PerUser/HydroTrackerForUser';
-import AddHydroTracker from './HydroTracker-b/AddHydroTracker';
-import EditHydroTracker from './HydroTracker-b/EditHydroTracker';
+import HydroTracker from './HydroTracker/HydroTracker';
+import HydroTrackerForUser from './HydroTracker/PerUser/HydroTrackerForUser';
+import AddHydroTracker from './HydroTracker/AddHydroTracker';
+import EditHydroTracker from './HydroTracker/EditHydroTracker';
 
-import SmokingTracker from './SmokingTracker-p/SmokingTracker';
-import SmokingTrackerForUser from './SmokingTracker-p/PerUser/SmokingTrackerForUser';
-import AddSmokingTracker from './SmokingTracker-p/AddSmokingTracker';
-import EditSmokingTracker from './SmokingTracker-p/EditSmokingTracker';
+import SmokingTracker from './SmokingTracker/SmokingTracker';
+import SmokingTrackerForUser from './SmokingTracker/PerUser/SmokingTrackerForUser';
+import AddSmokingTracker from './SmokingTracker/AddSmokingTracker';
+import EditSmokingTracker from './SmokingTracker/EditSmokingTracker';
 
-import DrinkingTracker from './DrinkingTracker-p/DrinkingTracker';
-import DrinkingTrackerForUser from './DrinkingTracker-p/PerUser/DrinkingTrackerForUser';
-import AddDrinkingTracker from './DrinkingTracker-p/AddDrinkingTracker';
-import EditDrinkingTracker from './DrinkingTracker-p/EditDrinkingTracker';
+import DrinkingTracker from './DrinkingTracker/DrinkingTracker';
+import DrinkingTrackerForUser from './DrinkingTracker/PerUser/DrinkingTrackerForUser';
+import AddDrinkingTracker from './DrinkingTracker/AddDrinkingTracker';
+import EditDrinkingTracker from './DrinkingTracker/EditDrinkingTracker';
 
-import ScreenTimeTracker from './ScreenTimeTracker-p/ScreenTimeTracker';
-import ScreenTimeTrackerForUser from './ScreenTimeTracker-p/PerUser/ScreenTimeTrackerForUser';
-import AddScreenTimeTracker  from './ScreenTimeTracker-p/AddScreenTimeTracker';
-import EditScreenTimeTracker from  './ScreenTimeTracker-p/EditScreenTimeTracker';
+import ScreenTimeTracker from './ScreenTimeTracker/ScreenTimeTracker';
+import ScreenTimeTrackerForUser from './ScreenTimeTracker/PerUser/ScreenTimeTrackerForUser';
+import AddScreenTimeTracker  from './ScreenTimeTracker/AddScreenTimeTracker';
+import EditScreenTimeTracker from  './ScreenTimeTracker/EditScreenTimeTracker';
 
-import ActiveMoveTracker from './ActiveMoveTracker-p/ActiveMoveTracker';
-import ActiveMoveTrackerForUser from './ActiveMoveTracker-p/PerUser/ActiveMoveTrackerForUser';
-import AddActiveMoveTracker from './ActiveMoveTracker-p/AddActiveMoveTarcker';
-import EditActiveMoveTracker from './ActiveMoveTracker-p/EditActiveMoveTracker';
+import ActiveMoveTracker from './ActiveMoveTracker/ActiveMoveTracker';
+import ActiveMoveTrackerForUser from './ActiveMoveTracker/PerUser/ActiveMoveTrackerForUser';
+import AddActiveMoveTracker from './ActiveMoveTracker/AddActiveMoveTarcker';
+import EditActiveMoveTracker from './ActiveMoveTracker/EditActiveMoveTracker';
 
-import MealPlanner from './MealPlanner-p/MealPlanner';
-import MealPlannerForUser from './MealPlanner-p/PerUser/MealPlannerForUser';
-import AddMealPlanner from './MealPlanner-p/AddMealPlanner';
-// import EditMealPlanner from './MealPlanner-p/EditMealPlanner';
+import MealPlanner from './MealPlanner/MealPlanner';
+import MealPlannerForUser from './MealPlanner/PerUser/MealPlannerForUser';
+import AddMealPlanner from './MealPlanner/AddMealPlanner';
+// import EditMealPlanner from './MealPlanner/EditMealPlanner';
 
 import LogIn from "./Authentication/LogIn";
 import LogOut from "./Authentication/LogOut";
