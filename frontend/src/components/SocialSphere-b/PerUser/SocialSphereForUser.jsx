@@ -92,8 +92,8 @@ function SocialSphereForUser({ user, setUser }) {
                 item
                 xs={12}
                 sm={10}
-                md={5}
-                lg={3}
+                md={6}
+                lg={6}
                 p={2}
                 sx={{
                   boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",

@@ -4,11 +4,11 @@ import "../../css/ScreenTimeTracker/ScreenTimeTracker.css";
 
 function ScreenTimeTrackerItem(props) {
   return (
-    <div className="item-container">
+    <div className="item-container flex justify-center">
       <img src={gifImage} alt="Screen Time Tracker" className="rounded-gif" />
       <div className="tracker-container">
         <div className="card-body">
-          <div className="card-title p-2">
+          <div className="card-title p-2 mx-2">
             <h5 className="mb-1">Tracker for user: {props.user.username}</h5>
           </div>
           <ul className="list-group activity-list">

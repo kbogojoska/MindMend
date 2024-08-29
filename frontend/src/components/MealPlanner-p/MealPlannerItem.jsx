@@ -42,11 +42,11 @@ function MealPlannerItem(props) {
   };
 
   return (
-    <div className="item-container">
+    <div className="item-container flex justify-center">
       <img src={gifImage} alt="Animated Meal Planner" className="rounded-gif" />
       <div className="tracker-container">
         <div className="card-body">
-          <div className="card-title p-2">
+          <div className="card-title p-2 mx-2">
             <h5 className="mb-1">Meal Planner for user: {props.user.username}</h5>
           </div>
           <div className="card-body p-2">
