@@ -20,14 +20,14 @@ function MindfulMomentItem(props) {
   };
 
   return (
-    <div className="item-container">
+    <div className="item-container flex justify-center">
       <img src={gifImage} alt="Mindful Moment Tracker" className="rounded-gif" />
       <div className="tracker-container">
         <div className="card-body">
           <div className='card-title p-2'>
             <h5 className="mb-1">Tracker for user: {props.user.username}</h5>
           </div>
-          <ul className="list-group">
+          <ul className="list-group mx-2">
             <li className="list-group-item">Start work: {props.startOfWorkShift}</li>
             <li className="list-group-item">End work: {props.endOfWorkShift}</li>
             <li className="list-group-item">Stress level: {props.stressLevel}</li>

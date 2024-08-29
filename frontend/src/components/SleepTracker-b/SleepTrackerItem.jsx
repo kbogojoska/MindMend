@@ -4,7 +4,7 @@ import "../../css/SleepTracker/SleepTracker.css";
 
 function SleepTrackerItem(props) {
   return (
-    <div className="item-container">
+    <div className="item-container flex justify-center">
         <img src={gifImage} alt="Animated Clock" className="rounded-gif" />
       <div className="tracker-container">
         <div className="card-body">
@@ -13,7 +13,7 @@ function SleepTrackerItem(props) {
               Tracker for user: {props.user.username}
             </h5>
           </div>
-          <ul className="list-group">
+          <ul className="list-group mx-2">
             <li className="list-group-item">Bedtime: {props.bedTime}</li>
             <li className="list-group-item">
               Recommended sleep time: {props.recommendedSleepTime}
