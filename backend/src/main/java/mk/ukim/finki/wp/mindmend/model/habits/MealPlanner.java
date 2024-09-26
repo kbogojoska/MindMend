@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.wp.mindmend.model.ApplicationUser;
 import mk.ukim.finki.wp.mindmend.model.Recipe;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +27,8 @@ public class MealPlanner{
     private List<Recipe> recipes;
 
     @OneToOne
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ApplicationUser user;
 
     public MealPlanner(ApplicationUser user, List<Recipe> recipes) {

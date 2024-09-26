@@ -9,6 +9,7 @@ import ScreenTimeDisclosure from "./HabitDisclosures/ScreenTimeDisclosure";
 import SleepTrackerDisclosure from "./HabitDisclosures/SleepTrackerDisclosure";
 import MindfulMomentDisclosure from "./HabitDisclosures/MindfulMomentDisclosure";
 import SocialSphereDisclosure from "./HabitDisclosures/SocialSphereDisclosure";
+import WorkoutTrackerDisclosure from "./HabitDisclosures/WorkoutTrackerDisclosure";
 import "../css/Home.css";
 
 function Home({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser  }) {
@@ -45,6 +46,7 @@ function Home({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser  }) {
               <SleepTrackerDisclosure />
               <SmokingTrackerDisclosure />
               <SocialSphereDisclosure />
+              <WorkoutTrackerDisclosure />
             </div>
           </div>
         </section>

@@ -26,6 +26,7 @@ function App() {
     "meal-planner",
     "activemove-tracker",
     "screen-tracker",
+    "workout-tracker",
   ];
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function App() {
         `${username}_screen_time_reminders`,
         `${username}_meal_reminders`,
         `${username}_social_reminders`,
+        `${username}_workout_reminders`,
       ];
   
       reminderKeys.forEach(userRemindersKey => {

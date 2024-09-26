@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
-import { FaWalking } from "react-icons/fa";
+import { CgGym } from "react-icons/cg";
 
-function ActiveMoveDisclosure() {
+function WorkoutTrackerDisclosure() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -15,8 +15,7 @@ function ActiveMoveDisclosure() {
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="text-base flex font-medium">
-          <FaWalking size={20} className="mr-2" />
-            Active Move Tracker
+          <CgGym size={20} className='mr-2'/> Workout Tracker
           </span>
           <ChevronDownIcon
             className={`w-5 h-5 ml-2 text-gray-600 transform ${isOpen ? 'rotate-180' : ''}`}
@@ -32,9 +31,9 @@ function ActiveMoveDisclosure() {
           leaveTo="opacity-0 scale-95"
         >
           <DisclosurePanel className="text-sm text-gray-700 bg-white border-t border-l border-r border-gray-400 rounded-b-lg p-4">
-            <p className="mb-2">The Active Move Tracker monitors and logs physical activity for users.</p>
+            <p className="mb-2">The Workout Tracker monitors your exercise habits and sends reminders for upcoming workouts.</p>
             <div className="flex justify-center">
-              <Link to="/activemove-tracker" className="inline-block px-4 py-2 text-white bg-gradient-to-r from-pink-300 to-blue-300 rounded-md shadow-md hover:bg-gradient-to-r hover:from-pink-400 hover:to-blue-400">
+              <Link to="/workout-tracker" className="inline-block px-4 py-2 text-white bg-gradient-to-r from-pink-300 to-blue-300 rounded-md shadow-md hover:bg-gradient-to-r hover:from-pink-400 hover:to-blue-400">
                 Visit Tracker Info
               </Link>
             </div>
@@ -45,4 +44,4 @@ function ActiveMoveDisclosure() {
   );
 }
 
-export default ActiveMoveDisclosure;
+export default WorkoutTrackerDisclosure;

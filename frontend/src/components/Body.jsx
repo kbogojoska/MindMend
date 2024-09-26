@@ -46,6 +46,11 @@ import MealPlannerForUser from './MealPlanner/PerUser/MealPlannerForUser';
 import AddMealPlanner from './MealPlanner/AddMealPlanner';
 // import EditMealPlanner from './MealPlanner/EditMealPlanner';
 
+import WorkoutTracker from './WorkoutTracker/WorkoutTracker';
+import WorkoutTrackerForUser from './WorkoutTracker/PerUser/WorkoutTrackerForUser';
+import AddWorkoutTracker from './WorkoutTracker/AddWorkoutTracker';
+import EditWorkoutTracker from './WorkoutTracker/EditWorkoutTracker';
+
 import LogIn from "./Authentication/LogIn";
 import LogOut from "./Authentication/LogOut";
 import SignUp from "./Authentication/SignUp";
@@ -84,6 +89,9 @@ function Body({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser }) {
                   <Route exact path="/meal-planner" element={<MealPlanner />} /> 
                   <Route path="/meal-planner/add" element={<AddMealPlanner />} /> 
                   {/* <Route path="/meal-planner/edit/:id" element={<EditMealPlanner />} /> */}
+                  <Route exact path="/workout-tracker" element={<WorkoutTracker />} /> 
+                  <Route path="/workout-tracker/add" element={<AddWorkoutTracker />} /> 
+                  <Route path="/workout-tracker/edit/:id" element={<EditWorkoutTracker />} />
                 </>) : (<>
                   <Route exact path="/hydro-track" element={<HydroTrackerForUser user={user} setUser={setUser}/>} />
                   <Route exact path="/activemove-tracker" element={<ActiveMoveTrackerForUser user={user} setUser={setUser}/>} />
@@ -94,6 +102,7 @@ function Body({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser }) {
                   <Route exact path="/screen-tracker" element={<ScreenTimeTrackerForUser user={user} setUser={setUser}/>} /> 
                   <Route exact path="/meal-planner" element={<MealPlannerForUser user={user} setUser={setUser}/>} /> 
                   <Route exact path="/social-sphere" element={<SocialSphereForUser user={user} setUser={setUser}/>} /> 
+                  <Route exact path="/workout-tracker" element={<WorkoutTrackerForUser user={user} setUser={setUser}/>} />
                 </>)
               }
               <Route path="/hydro-track/edit/:id" element={<EditHydroTracker isAdmin={isAdmin} user={user} setUser={setUser}/>} />
@@ -103,6 +112,7 @@ function Body({ isLogged, setIsLogged, isAdmin, setIsAdmin, user, setUser }) {
               <Route path="/sleep-tracker/edit/:id" element={<EditSleepTracker isAdmin={isAdmin} user={user} setUser={setUser}/>} />
               <Route path="/smoking-tracker/edit/:id" element={<EditSmokingTracker isAdmin={isAdmin} user={user} setUser={setUser}/>}/>
               <Route path="/screen-tracker/edit/:id" element={<EditScreenTimeTracker isAdmin={isAdmin} user={user} setUser={setUser}/>} />
+              <Route path="/workout-tracker/edit/:id" element={<EditWorkoutTracker isAdmin={isAdmin} user={user} setUser={setUser}/>}/>
               
               <Route path="/logout" element={<LogOut isLogged={isLogged} setLogged={setIsLogged} user={user} setUser={setUser}/>} />
             </> ) : (

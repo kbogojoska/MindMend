@@ -30,6 +30,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService, UserD
     private final SleepTrackerService sleepTrackerService;
     private final MindfulMomentService mindfulMomentService;
     private final SocialSphereService socialSphereService;
+    private final WorkoutTrackerService workoutTrackerService;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -45,6 +46,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService, UserD
                                       SleepTrackerService sleepTrackerService,
                                       SocialSphereService socialSphereService,
                                       MindfulMomentService mindfulMomentService,
+                                      WorkoutTrackerService workoutTrackerService,
                                       PasswordEncoder passwordEncoder) {
         this.applicationUserRepository = applicationUserRepository;
         this.hydroTrackService = hydroTrackService;
@@ -56,6 +58,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService, UserD
         this.sleepTrackerService = sleepTrackerService;
         this.mindfulMomentService = mindfulMomentService;
         this.socialSphereService = socialSphereService;
+        this.workoutTrackerService = workoutTrackerService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -89,6 +92,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService, UserD
         screenTimeTrackerService.create(null, null, user);
         sleepTrackerService.create(null, null, null, user);
         socialSphereService.create(user);
+        workoutTrackerService.create(null, null, null, user);
         return user;
     }
 
